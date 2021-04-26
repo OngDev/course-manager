@@ -11,9 +11,8 @@
     ],
     "settings": {
         "eslint.workingDirectories": [
-          "packages/dashboard",
-          "packages/server",
-          "packages/webchat"
+          "packages/client",
+          "packages/server"
         ],
         "search.exclude": {
           "**/node_modules": true,
