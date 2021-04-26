@@ -45,7 +45,6 @@ test/**/*.js.map
 /.nyc_output
 
 # IDE
-.vscode
 .idea
 
 # Project
