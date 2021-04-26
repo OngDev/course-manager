@@ -2,10 +2,11 @@
 import dotenv from 'dotenv';
 
 dotenv.config();
-const {NODE_ENV} = process.env;
-const is = {
+export const env = process.env;
+const {NODE_ENV} = env;
+export const is = {
   development: NODE_ENV === 'development',
   prod: NODE_ENV === 'production',
 };
 
-export default is;
+

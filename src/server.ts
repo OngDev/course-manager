@@ -5,12 +5,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import logger from './utils/logger';
-import is from './utils/env';
+import {is, env} from './utils/env';
 
 dotenv.config();
 
 const app: Application = express();
-const port = 3000;
+const port = env.PORT || 3000;
 
 // Body parsing Middleware
 app.use(express.json());
