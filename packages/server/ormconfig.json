@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "mysecretpassword",
+  "database": "my_database",
+  "entities": [
+    "/Users/ongdevbug/Dev/OngDev/course-manager/course-manager/packages/server/src/config/**/*.entity.{ts,js}"
+  ],
+  "migrationsTableName": "migration",
+  "migrations": [
+    "src/migration/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "ssl": false
+}
