@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -7,6 +8,7 @@ import {
 import * as winston from 'winston';
 
 import { AppModule } from './modules';
+import { configService } from './config/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -33,6 +35,17 @@ async function bootstrap() {
       ],
     }),
   });
+  if (!configService.isProduction()) {
+    const document = SwaggerModule.createDocument(
+      app,
+      new DocumentBuilder()
+        .setTitle('Course Management API')
+        .setDescription('Course Management API')
+        .build(),
+    );
+
+    SwaggerModule.setup('docs', app, document);
+  }
   const PORT = process.env.PORT || 3333;
   const NODE_ENV = process.env.NODE_ENV || 'development';
   await app.listen(PORT, () => {
