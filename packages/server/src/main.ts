@@ -54,3 +54,5 @@ async function bootstrap() {
   });
 }
 bootstrap();
+
+export const SRC_DIR = __dirname;

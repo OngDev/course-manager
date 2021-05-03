@@ -6,7 +6,8 @@
   "password": "mysecretpassword",
   "database": "my_database",
   "entities": [
-    "/Users/ongdevbug/Dev/OngDev/course-manager/course-manager/packages/server/src/config/**/*.entity.{ts,js}"
+    "/Users/ongdevbug/Dev/OngDev/course-manager/course-manager/packages/server/src/**/*.entity.{ts,js}",
+    "/Users/ongdevbug/Dev/OngDev/course-manager/course-manager/packages/server/src/**/model.{ts,js}"
   ],
   "migrationsTableName": "migration",
   "migrations": [
