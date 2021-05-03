@@ -44,10 +44,7 @@ class ConfigService {
       ],
       migrationsTableName: 'migration',
 
-      migrations: [
-        join(__dirname, '../migration', '*.ts'),
-        join(__dirname, '../migration', '*.js'),
-      ],
+      migrations: [join(__dirname, '../migration', '*.{ts,js}')],
 
       cli: {
         migrationsDir: 'src/migration',
