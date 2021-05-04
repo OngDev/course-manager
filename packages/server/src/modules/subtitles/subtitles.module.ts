@@ -4,6 +4,10 @@ import { SubtitlesController } from './subtitles.controller';
 
 @Module({
   controllers: [SubtitlesController],
+<<<<<<< HEAD
   providers: [SubtitlesService],
+=======
+  providers: [SubtitlesService]
+>>>>>>> add subtitle module
 })
 export class SubtitlesModule {}
