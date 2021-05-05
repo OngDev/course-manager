@@ -9,6 +9,7 @@ import { VideoModule } from './video';
 import { SubtitlesModule } from './subtitles/subtitles.module';
 import { CommentsModule } from './comments/comments.module';
 import { SubLinesModule } from './sub-lines/sub-lines.module';
+import { CommentReactionsModule } from './comment-reactions/comment-reactions.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SubLinesModule } from './sub-lines/sub-lines.module';
     SubtitlesModule,
     CommentsModule,
     SubLinesModule,
+    CommentReactionsModule,
     ConfigModule.forRoot(),
   ],
 })
