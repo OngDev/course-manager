@@ -1,10 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { Entity, Column } from 'typeorm';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity } from 'src/modules/base/base.entity';
 
 @Entity('subtitle')
