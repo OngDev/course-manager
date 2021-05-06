@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CourseDTO } from './dto';
-import { BadRequestException } from './exceptions/bad-request.exception';
 import { Course } from './model';
 
 
@@ -20,11 +19,10 @@ export class CourseService {
       return this.courseRepository.save(courseDTO)
     } catch (error) {
       this.logger.error(error)
-      throw new BadRequestException()
     }
   }
 
-  find(): Promise<Course[]> {
+  findAll(): Promise<Course[]> {
     try {
       return this.courseRepository.find()
     } catch (error) {

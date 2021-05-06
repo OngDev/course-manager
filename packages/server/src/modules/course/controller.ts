@@ -12,15 +12,15 @@ export class CourseController {
   }
 
   @Get()
-  find(): Promise<Course[]> {
+  findAll(): Promise<Course[]> {
     try {
-      return this.courseService.find()
+      return this.courseService.findAll()
     } catch (error) {
       this.logger.error(error)
     }
   }
 
-  @Get()
+  @Get(':id')
   findById(@Param('id') id: string): Promise<Course> {
     try {
       return this.courseService.findById(id)
