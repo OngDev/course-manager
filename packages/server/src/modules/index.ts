@@ -16,4 +16,4 @@ import { VideoModule } from './video';
     ConfigModule.forRoot(),
   ],
 })
-export class AppModule { }
+export class AppModule {}

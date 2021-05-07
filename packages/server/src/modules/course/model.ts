@@ -4,7 +4,6 @@ import { Video } from '../video/entities/video.entity';
 
 @Entity({ name: 'course' })
 export class Course extends BaseEntity {
-
   @Column({ type: 'varchar', length: 300 })
   title: string;
 
@@ -12,8 +11,8 @@ export class Course extends BaseEntity {
   description: string;
 
   @Column({ type: 'varchar', length: 300 })
-  thumbnailUrl: string
+  thumbnailUrl: string;
 
-  @OneToMany(type => Video, video => video.course)
-  videos: Video[]
+  @OneToMany((type) => Video, (video) => video.course)
+  videos: Video[];
 }

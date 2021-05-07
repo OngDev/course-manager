@@ -7,6 +7,6 @@ import { Video } from './entities/video.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Video])],
   controllers: [VideoController],
-  providers: [VideoService]
+  providers: [VideoService],
 })
-export class VideoModule { }
+export class VideoModule {}
