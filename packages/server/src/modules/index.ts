@@ -6,6 +6,7 @@ import { ExampleModule } from './example';
 import { configService } from '../config/config.service';
 import { CourseModule } from './course';
 import { VideoModule } from './video';
+import { SubtitlesModule } from './subtitles/subtitles.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { VideoModule } from './video';
     ExampleModule,
     CourseModule,
     VideoModule,
+    SubtitlesModule,
     ConfigModule.forRoot(),
   ],
 })
