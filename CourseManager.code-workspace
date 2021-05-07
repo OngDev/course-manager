@@ -42,6 +42,7 @@
         "breadcrumbs.enabled": true,
         "workbench.editor.enablePreview": false,
         "eslint.packageManager": "yarn",
-        "npm.packageManager": "yarn"
+        "npm.packageManager": "yarn",
+        "files.eol": "\n"
       },
 }
