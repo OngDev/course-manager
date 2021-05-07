@@ -7,6 +7,10 @@
         {
             "name": "server",
             "path": "packages/server"
+        },
+        {
+            "name": "Documentation",
+            "path": "docs"
         }
     ],
     "settings": {
