@@ -8,6 +8,7 @@ import { CourseModule } from './course';
 import { VideoModule } from './video';
 import { SubtitlesModule } from './subtitles/subtitles.module';
 import { CommentsModule } from './comments/comments.module';
+import { SubLinesModule } from './sub-lines/sub-lines.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CommentsModule } from './comments/comments.module';
     VideoModule,
     SubtitlesModule,
     CommentsModule,
+    SubLinesModule,
     ConfigModule.forRoot(),
   ],
 })
