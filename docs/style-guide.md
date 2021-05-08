@@ -20,7 +20,7 @@
   --view-reply-text-color: rgba(61, 166, 255, 1);
   --video-title-text-color: rgba(255, 255, 255, 1);
   --video-bar-time-played-bg-color: rgba(255, 179, 71, 1);
-  --video-bar-bg: rgba(255, 255, 255, 0.15);
+  --video-bar-bg-color: rgba(255, 255, 255, 0.15);
   --timeline-text-color: rgba(61, 166, 255, 1);
   --text-primary-color: rgba(255, 255, 255, 1);
   --text-input-color: rgba(255, 255, 255, 1);
