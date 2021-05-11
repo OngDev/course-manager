@@ -14,5 +14,5 @@ export class Course extends BaseEntity {
   thumbnailUrl: string;
 
   @OneToMany((type) => Video, (video) => video.course)
-  videos: Video[];
+  videos?: Video[];
 }

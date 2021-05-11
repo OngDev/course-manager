@@ -32,4 +32,12 @@ export class VideoCreationDTO {
   })
   @IsNotEmpty()
   readonly course?: Course;
+
+  @ApiProperty({ default: 'this is createdBy' })
+  @IsNotEmpty()
+  readonly createdBy: string;
+
+  @ApiProperty({ default: 'this is updatedBy' })
+  @IsNotEmpty()
+  readonly updatedBy: string;
 }

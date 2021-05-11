@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Patch, Post } from '@nestjs/common';
 import { CourseCreationDTO } from './dto/create-course.dto';
+import { CourseUpdationDTO } from './dto/update-course.dto';
 import { Course } from './model';
 import { CourseService } from './service';
 
@@ -35,5 +36,19 @@ export class CourseController {
     } catch (error) {
       this.logger.error(error);
     }
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() courseDTO: CourseUpdationDTO): Promise<Course> {
+    try {
+      return this.courseService.update(id, courseDTO);
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.courseService.remove(id);
   }
 }
