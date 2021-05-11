@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { Course } from 'src/modules/course/model';
-export class CreateVideoDto {
+export class VideoCreationDTO {
   @ApiProperty({ default: 'this is title' })
   @IsString()
   @Type(() => String)

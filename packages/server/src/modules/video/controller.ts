@@ -8,15 +8,15 @@ import {
   Delete,
 } from '@nestjs/common';
 import { VideoService } from './service';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
+import { VideoCreationDTO } from './dto/create-video.dto';
+import { VideoUpdationDTO } from './dto/update-video.dto';
 
 @Controller('video')
 export class VideoController {
-  constructor(private readonly videoService: VideoService) {}
+  constructor(private readonly videoService: VideoService) { }
 
   @Post()
-  create(@Body() createVideoDto: CreateVideoDto) {
+  create(@Body() createVideoDto: VideoCreationDTO) {
     return this.videoService.create(createVideoDto);
   }
 
@@ -31,7 +31,7 @@ export class VideoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVideoDto: UpdateVideoDto) {
+  update(@Param('id') id: string, @Body() updateVideoDto: VideoUpdationDTO) {
     return this.videoService.update(+id, updateVideoDto);
   }
 

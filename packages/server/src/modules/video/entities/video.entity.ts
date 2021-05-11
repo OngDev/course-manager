@@ -19,7 +19,7 @@ export class Video extends BaseEntity {
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   publishAt: Date;
 
-  @ManyToOne((type) => Course, (course) => course.videos)
+  @ManyToOne(() => Course, (course) => course.videos)
   course: Course;
 
   @OneToMany(() => Subtitle, (subtitle) => subtitle.video)

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Course } from './model';
-import { CreateCourseDto } from './dto/create-course.dto';
+import { CourseCreationDTO } from './dto/create-course.dto';
 
 @Injectable()
 export class CourseService {
@@ -10,9 +10,9 @@ export class CourseService {
     private readonly logger: Logger,
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
-  ) {}
+  ) { }
 
-  createAndSave(courseDTO: CreateCourseDto): Promise<Course> {
+  createAndSave(courseDTO: CourseCreationDTO): Promise<Course> {
     try {
       return this.courseRepository.save(courseDTO);
     } catch (error) {
