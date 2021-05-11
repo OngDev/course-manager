@@ -27,16 +27,16 @@ export class VideoController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.videoService.findOne(+id);
+    return this.videoService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVideoDto: VideoUpdationDTO) {
-    return this.videoService.update(+id, updateVideoDto);
+    return this.videoService.update(id, updateVideoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.videoService.remove(+id);
+    return this.videoService.remove(id);
   }
 }
