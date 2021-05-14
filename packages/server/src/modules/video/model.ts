@@ -1,5 +1,11 @@
 import { Course } from 'src/modules/course/model';
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
 import { Subtitle } from 'src/modules/subtitles/entities/subtitle.entity';
 @Entity({ name: 'video' })

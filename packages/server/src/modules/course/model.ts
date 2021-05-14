@@ -13,6 +13,6 @@ export class Course extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
   thumbnailUrl: string;
 
-  @OneToMany((type) => Video, (video) => video.course)
-  videos: Video[];
+  @OneToMany(() => Video, (video) => video.course)
+  videos?: Video[];
 }
