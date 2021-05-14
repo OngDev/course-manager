@@ -17,11 +17,8 @@ const VideoViewer: React.FC = () => {
     const startVideo = () => {
         const video = videoRef.current;
         if (video) {
-            if(video.paused) {
-                video.play();
-            } else {
-                video.pause();
-            }    
+            if(video.paused) video.play(); 
+            else video.pause();
         }
     }
 
