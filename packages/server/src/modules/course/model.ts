@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
-import { Video } from '../video/entities/video.entity';
+import { Video } from '../video/model';
 
 @Entity({ name: 'course' })
 export class Course extends BaseEntity {

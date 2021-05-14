@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { BaseEntity } from 'src/modules/base/base.entity';
-import { Video } from 'src/modules/video/entities/video.entity';
+import { Video } from '../../video/model';
 
 @Entity('subtitle')
 export class Subtitle extends BaseEntity {

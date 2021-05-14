@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
-import { CreateCourseDto } from './dto/create-course.dto';
+import { CourseCreationDTO } from './dto/create-course.dto';
 import { Course } from './model';
 import { CourseService } from './service';
 
@@ -8,7 +8,7 @@ export class CourseController {
   constructor(
     private readonly logger: Logger,
     private readonly courseService: CourseService,
-  ) {}
+  ) { }
 
   @Get()
   findAll(): Promise<Course[]> {
@@ -29,7 +29,7 @@ export class CourseController {
   }
 
   @Post()
-  createAndSave(@Body() courseDTO: CreateCourseDto): Promise<Course> {
+  createAndSave(@Body() courseDTO: CourseCreationDTO): Promise<Course> {
     try {
       return this.courseService.createAndSave(courseDTO);
     } catch (error) {
