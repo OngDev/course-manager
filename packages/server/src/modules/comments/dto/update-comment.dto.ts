@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateCommentDto } from './create-comment.dto';
+import { CommentCreationDTO } from './create-comment.dto';
 
-export class UpdateCommentDto extends PartialType(CreateCommentDto) {}
+export class CommentUpdatingDTO extends PartialType(CommentCreationDTO) {}

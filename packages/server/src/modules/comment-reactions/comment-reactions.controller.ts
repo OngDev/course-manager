@@ -8,8 +8,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CommentReactionsService } from './comment-reactions.service';
-import { CreateCommentReactionDto } from './dto/create-comment-reaction.dto';
-import { UpdateCommentReactionDto } from './dto/update-comment-reaction.dto';
+import { CommentReactionCreationDTO } from './dto/create-comment-reaction.dto';
+import { CommentReactionUpdatingDTO } from './dto/update-comment-reaction.dto';
 
 @Controller('comment-reactions')
 export class CommentReactionsController {
@@ -18,8 +18,8 @@ export class CommentReactionsController {
   ) {}
 
   @Post()
-  create(@Body() createCommentReactionDto: CreateCommentReactionDto) {
-    return this.commentReactionsService.create(createCommentReactionDto);
+  create(@Body() CommentReactionCreationDTO: CommentReactionCreationDTO) {
+    return this.commentReactionsService.create(CommentReactionCreationDTO);
   }
 
   @Get()
@@ -35,9 +35,9 @@ export class CommentReactionsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateCommentReactionDto: UpdateCommentReactionDto,
+    @Body() CommentReactionUpdatingDTO: CommentReactionUpdatingDTO,
   ) {
-    return this.commentReactionsService.update(+id, updateCommentReactionDto);
+    return this.commentReactionsService.update(+id, CommentReactionUpdatingDTO);
   }
 
   @Delete(':id')

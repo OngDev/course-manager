@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreateSubLineDto } from './create-sub-line.dto';
+import { SubLineCreationDTO } from './create-sub-line.dto';
 
-export class UpdateSubLineDto extends PartialType(CreateSubLineDto) {}
+export class SubLineUpdatingDTO extends PartialType(SubLineCreationDTO) {}
