@@ -1,15 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SubLinesService } from './sub-lines.service';
-import { CreateSubLineDto } from './dto/create-sub-line.dto';
-import { UpdateSubLineDto } from './dto/update-sub-line.dto';
+import { SubLineCreationDTO } from './dto/create-sub-line.dto';
+import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
 
 @Controller('sub-lines')
 export class SubLinesController {
   constructor(private readonly subLinesService: SubLinesService) {}
 
   @Post()
-  create(@Body() createSubLineDto: CreateSubLineDto) {
-    return this.subLinesService.create(createSubLineDto);
+  create(@Body() subLineCreationDTO: SubLineCreationDTO) {
+    return this.subLinesService.create(subLineCreationDTO);
   }
 
   @Get()
@@ -23,8 +31,11 @@ export class SubLinesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubLineDto: UpdateSubLineDto) {
-    return this.subLinesService.update(+id, updateSubLineDto);
+  update(
+    @Param('id') id: string,
+    @Body() subLineUpdatingDTO: SubLineUpdatingDTO,
+  ) {
+    return this.subLinesService.update(+id, subLineUpdatingDTO);
   }
 
   @Delete(':id')

@@ -8,16 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { CommentCreationDTO } from './dto/create-comment.dto';
+import { CommentUpdatingDTO } from './dto/update-comment.dto';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
+  create(@Body() commentCreationDTO: CommentCreationDTO) {
+    return this.commentsService.create(commentCreationDTO);
   }
 
   @Get()
@@ -31,8 +31,11 @@ export class CommentsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentsService.update(+id, updateCommentDto);
+  update(
+    @Param('id') id: string,
+    @Body() commentUpdatingDTO: CommentUpdatingDTO,
+  ) {
+    return this.commentsService.update(+id, commentUpdatingDTO);
   }
 
   @Delete(':id')
