@@ -9,14 +9,19 @@
             "path": "packages/server"
         },
         {
-            "name": "Documentation",
+            "name": "docs",
             "path": "docs"
-        }
+        },
+	{
+	    "name": "cms",
+	    "path": "packages/cms
+	}
     ],
     "settings": {
         "eslint.workingDirectories": [
           "packages/client",
-          "packages/server"
+          "packages/server",
+	  "packages/cms"
         ],
         "search.exclude": {
           "**/node_modules": true,
