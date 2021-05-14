@@ -18,8 +18,8 @@ export class CommentReactionsController {
   ) {}
 
   @Post()
-  create(@Body() CommentReactionCreationDTO: CommentReactionCreationDTO) {
-    return this.commentReactionsService.create(CommentReactionCreationDTO);
+  create(@Body() commentReactionCreationDTO: CommentReactionCreationDTO) {
+    return this.commentReactionsService.create(commentReactionCreationDTO);
   }
 
   @Get()
@@ -35,9 +35,9 @@ export class CommentReactionsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() CommentReactionUpdatingDTO: CommentReactionUpdatingDTO,
+    @Body() commentReactionUpdatingDTO: CommentReactionUpdatingDTO,
   ) {
-    return this.commentReactionsService.update(+id, CommentReactionUpdatingDTO);
+    return this.commentReactionsService.update(+id, commentReactionUpdatingDTO);
   }
 
   @Delete(':id')

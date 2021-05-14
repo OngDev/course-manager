@@ -16,8 +16,8 @@ export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() CommentCreationDTO: CommentCreationDTO) {
-    return this.commentsService.create(CommentCreationDTO);
+  create(@Body() commentCreationDTO: CommentCreationDTO) {
+    return this.commentsService.create(commentCreationDTO);
   }
 
   @Get()
@@ -31,8 +31,11 @@ export class CommentsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() CommentUpdatingDTO: CommentUpdatingDTO) {
-    return this.commentsService.update(+id, CommentUpdatingDTO);
+  update(
+    @Param('id') id: string,
+    @Body() commentUpdatingDTO: CommentUpdatingDTO,
+  ) {
+    return this.commentsService.update(+id, commentUpdatingDTO);
   }
 
   @Delete(':id')

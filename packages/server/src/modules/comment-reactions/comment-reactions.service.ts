@@ -4,7 +4,7 @@ import { CommentReactionUpdatingDTO } from './dto/update-comment-reaction.dto';
 
 @Injectable()
 export class CommentReactionsService {
-  create(CommentReactionCreationDTO: CommentReactionCreationDTO) {
+  create(commentReactionCreationDTO: CommentReactionCreationDTO) {
     return 'This action adds a new commentReaction';
   }
 
@@ -16,7 +16,7 @@ export class CommentReactionsService {
     return `This action returns a #${id} commentReaction`;
   }
 
-  update(id: number, CommentReactionUpdatingDTO: CommentReactionUpdatingDTO) {
+  update(id: number, commentReactionUpdatingDTO: CommentReactionUpdatingDTO) {
     return `This action updates a #${id} commentReaction`;
   }
 

@@ -9,15 +9,15 @@ import {
 } from '@nestjs/common';
 import { SubtitlesService } from './subtitles.service';
 import { SubtitleCreationDTO } from './dto/create-subtitle.dto';
-import { UpdateSubtitleDTO } from './dto/update-subtitle.dto';
+import { SubtitleUpdatingDTO } from './dto/update-subtitle.dto';
 
 @Controller('subtitles')
 export class SubtitlesController {
   constructor(private readonly subtitlesService: SubtitlesService) {}
 
   @Post()
-  create(@Body() SubtitleCreationDTO: SubtitleCreationDTO) {
-    return this.subtitlesService.create(SubtitleCreationDTO);
+  create(@Body() subtitleCreationDTO: SubtitleCreationDTO) {
+    return this.subtitlesService.create(subtitleCreationDTO);
   }
 
   @Get()
@@ -33,9 +33,9 @@ export class SubtitlesController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() UpdateSubtitleDTO: UpdateSubtitleDTO,
+    @Body() SubtitleUpdatingDTO: SubtitleUpdatingDTO,
   ) {
-    return this.subtitlesService.update(+id, UpdateSubtitleDTO);
+    return this.subtitlesService.update(+id, SubtitleUpdatingDTO);
   }
 
   @Delete(':id')

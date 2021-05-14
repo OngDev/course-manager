@@ -4,7 +4,7 @@ import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
 
 @Injectable()
 export class SubLinesService {
-  create(SubLineCreationDTO: SubLineCreationDTO) {
+  create(subLineCreationDTO: SubLineCreationDTO) {
     return 'This action adds a new subLine';
   }
 
@@ -16,7 +16,7 @@ export class SubLinesService {
     return `This action returns a #${id} subLine`;
   }
 
-  update(id: number, SubLineUpdatingDTO: SubLineUpdatingDTO) {
+  update(id: number, subLineUpdatingDTO: SubLineUpdatingDTO) {
     return `This action updates a #${id} subLine`;
   }
 
