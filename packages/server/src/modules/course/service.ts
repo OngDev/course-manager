@@ -13,7 +13,7 @@ export class CourseService {
     private readonly courseRepository: Repository<Course>,
   ) {}
 
-  createAndSave(courseDTO: CourseCreationDTO): Promise<Course> {
+  createAndSave(courseDTO: CourseCreationDTO): Promise<CourseCreationDTO> {
     try {
       return this.courseRepository.save(courseDTO);
     } catch (error) {
@@ -21,7 +21,7 @@ export class CourseService {
     }
   }
 
-  findAll(): Promise<Course[]> {
+  findAll(): Promise<CourseCreationDTO[]> {
     try {
       return this.courseRepository.find();
     } catch (error) {
@@ -29,7 +29,7 @@ export class CourseService {
     }
   }
 
-  findById(id: string): Promise<Course> {
+  findById(id: string): Promise<CourseCreationDTO> {
     try {
       return this.courseRepository.findOne(id);
     } catch (error) {
@@ -39,19 +39,18 @@ export class CourseService {
   async update(
     id: string,
     updateCourseDto: CourseUpdationDTO,
-  ): Promise<Course> {
+  ): Promise<CourseCreationDTO> {
     try {
-      await this.courseRepository.update({ id }, { ...updateCourseDto });
-      return this.courseRepository.findOne({ id });
+      return this.courseRepository.save({ id, ...updateCourseDto });
     } catch (error) {
       this.logger.error(error);
     }
   }
 
-  async remove(id: string): Promise<any> {
+  async remove(id: string): Promise<boolean> {
     try {
       await this.courseRepository.delete({ id });
-      return { message: 'ok' };
+      return true;
     } catch (error) {
       this.logger.error(error);
     }

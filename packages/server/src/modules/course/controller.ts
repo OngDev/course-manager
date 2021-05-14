@@ -21,7 +21,7 @@ export class CourseController {
   ) {}
 
   @Get()
-  findAll(): Promise<Course[]> {
+  findAll(): Promise<CourseCreationDTO[]> {
     try {
       return this.courseService.findAll();
     } catch (error) {
@@ -30,7 +30,7 @@ export class CourseController {
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Promise<Course> {
+  findById(@Param('id') id: string): Promise<CourseCreationDTO> {
     try {
       return this.courseService.findById(id);
     } catch (error) {
@@ -39,7 +39,9 @@ export class CourseController {
   }
 
   @Post()
-  createAndSave(@Body() courseDTO: CourseCreationDTO): Promise<Course> {
+  createAndSave(
+    @Body() courseDTO: CourseCreationDTO,
+  ): Promise<CourseCreationDTO> {
     try {
       return this.courseService.createAndSave(courseDTO);
     } catch (error) {
@@ -51,7 +53,7 @@ export class CourseController {
   update(
     @Param('id') id: string,
     @Body() courseDTO: CourseUpdationDTO,
-  ): Promise<Course> {
+  ): Promise<CourseCreationDTO> {
     try {
       return this.courseService.update(id, courseDTO);
     } catch (error) {
@@ -60,7 +62,7 @@ export class CourseController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<boolean> {
     return this.courseService.remove(id);
   }
 }
