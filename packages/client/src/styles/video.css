@@ -71,3 +71,81 @@
     backdrop-filter: blur(36px);
     text-align: left;
 }
+
+.VideoDetailWrapper {
+    position: relative;
+    width: 819px;
+    height: 420px;
+    margin: auto;
+}
+
+.VideoDetail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.Control {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 100px);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(120px);
+    border-radius: 15px;
+    padding: 8px 23px;
+}
+
+.Control span:not(:last-child) {
+    margin-right: 18px;
+}
+
+.Control span {
+    cursor: pointer;
+}
+
+.Duration {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(120px);
+    border-radius: 15px;
+    margin-right: 18px;
+}
+
+.Time {
+    background: #FFB347;
+    backdrop-filter: blur(120px);
+    width: 50%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    color: #fff;
+    position: absolute;
+}
+
+.Time span {
+    position: absolute;
+    left: 14px;
+    width: 146px;
+}
+
+.SpeedOptions {
+    list-style: none;
+    position: absolute;
+    top: -100px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0;
+    margin: 0;
+    padding: 10px;
+    border-radius: 2px;
+    color: #ccc;
+}
+
+.SpeedOptions li:hover {
+    color: #fff;
+}
