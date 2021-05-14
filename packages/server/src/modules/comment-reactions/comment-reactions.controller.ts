@@ -10,7 +10,9 @@ import {
 import { CommentReactionsService } from './comment-reactions.service';
 import { CommentReactionCreationDTO } from './dto/create-comment-reaction.dto';
 import { CommentReactionUpdatingDTO } from './dto/update-comment-reaction.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Comment reactions')
 @Controller('comment-reactions')
 export class CommentReactionsController {
   constructor(

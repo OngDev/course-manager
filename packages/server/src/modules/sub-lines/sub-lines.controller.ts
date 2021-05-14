@@ -10,7 +10,9 @@ import {
 import { SubLinesService } from './sub-lines.service';
 import { SubLineCreationDTO } from './dto/create-sub-line.dto';
 import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Sub-lines')
 @Controller('sub-lines')
 export class SubLinesController {
   constructor(private readonly subLinesService: SubLinesService) {}
