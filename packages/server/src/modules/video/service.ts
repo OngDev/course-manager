@@ -23,11 +23,15 @@ export class VideoService {
     private readonly cacheManager: Cache,
   ) {}
 
-  create(createVideoDto: VideoCreationDTO) {
-    return 'This action adds a new video';
+  create(createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
+    try {
+      return this.videoRepository.save(createVideoDto);
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 
-  findAll(): Promise<Video[]> {
+  findAll(): Promise<VideoCreationDTO[]> {
     try {
       return this.videoRepository.find();
     } catch (error) {
@@ -35,7 +39,7 @@ export class VideoService {
     }
   }
 
-  findOne(id: string): Promise<Video> {
+  findOne(id: string): Promise<VideoCreationDTO> {
     try {
       return this.videoRepository.findOne({ id });
     } catch (error) {
@@ -43,21 +47,21 @@ export class VideoService {
     }
   }
 
-  async update(id: string, updateVideoDto: VideoUpdationDTO): Promise<Video> {
+  async update(
+    id: string,
+    updateVideoDto: VideoUpdationDTO,
+  ): Promise<VideoCreationDTO> {
     try {
-      await this.videoRepository.update({ id }, { ...updateVideoDto });
-      return this.videoRepository.findOne({ id });
+      return await this.videoRepository.save({ id, ...updateVideoDto });
     } catch (error) {
       this.logger.error(error);
     }
   }
 
-  async remove(id: string): Promise<any> {
+  async remove(id: string): Promise<boolean> {
     try {
       await this.videoRepository.delete({ id });
-      return {
-        message: 'ok',
-      };
+      return true;
     } catch (error) {
       this.logger.error(error);
     }

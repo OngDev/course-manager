@@ -16,27 +16,30 @@ export class VideoController {
   constructor(private readonly videoService: VideoService) {}
 
   @Post()
-  create(@Body() createVideoDto: VideoCreationDTO) {
+  create(@Body() createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
     return this.videoService.create(createVideoDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<VideoCreationDTO[]> {
     return this.videoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<VideoCreationDTO> {
     return this.videoService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVideoDto: VideoUpdationDTO) {
+  update(
+    @Param('id') id: string,
+    @Body() updateVideoDto: VideoUpdationDTO,
+  ): Promise<VideoCreationDTO> {
     return this.videoService.update(id, updateVideoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<boolean> {
     return this.videoService.remove(id);
   }
 }
