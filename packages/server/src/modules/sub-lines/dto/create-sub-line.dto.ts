@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsDate } from 'class-validator';
 
-export class CreateSubLineDto {
+export class SubLineCreationDTO {
   @ApiProperty({ default: Date.now() })
   @IsDate()
   @IsNotEmpty()

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubtitleDto } from './dto/create-subtitle.dto';
-import { UpdateSubtitleDto } from './dto/update-subtitle.dto';
+import { SubtitleCreationDTO } from './dto/create-subtitle.dto';
+import { SubtitleUpdatingDTO } from './dto/update-subtitle.dto';
 
 @Injectable()
 export class SubtitlesService {
-  create(createSubtitleDto: CreateSubtitleDto) {
+  create(subtitleCreationDTO: SubtitleCreationDTO) {
     return 'This action adds a new subtitle';
   }
 
@@ -16,7 +16,7 @@ export class SubtitlesService {
     return `This action returns a #${id} subtitle`;
   }
 
-  update(id: number, updateSubtitleDto: UpdateSubtitleDto) {
+  update(id: number, subtitleUpdatingDTO: SubtitleUpdatingDTO) {
     return `This action updates a #${id} subtitle`;
   }
 

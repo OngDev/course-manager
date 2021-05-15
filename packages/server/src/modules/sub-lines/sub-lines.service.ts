@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubLineDto } from './dto/create-sub-line.dto';
-import { UpdateSubLineDto } from './dto/update-sub-line.dto';
+import { SubLineCreationDTO } from './dto/create-sub-line.dto';
+import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
 
 @Injectable()
 export class SubLinesService {
-  create(createSubLineDto: CreateSubLineDto) {
+  create(subLineCreationDTO: SubLineCreationDTO) {
     return 'This action adds a new subLine';
   }
 
@@ -16,7 +16,7 @@ export class SubLinesService {
     return `This action returns a #${id} subLine`;
   }
 
-  update(id: number, updateSubLineDto: UpdateSubLineDto) {
+  update(id: number, subLineUpdatingDTO: SubLineUpdatingDTO) {
     return `This action updates a #${id} subLine`;
   }
 

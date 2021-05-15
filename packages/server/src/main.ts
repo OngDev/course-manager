@@ -9,6 +9,7 @@ import * as winston from 'winston';
 
 import { AppModule } from './modules';
 import { configService } from './config/config.service';
+import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -48,6 +49,7 @@ async function bootstrap() {
   }
   const PORT = process.env.PORT || 3333;
   const NODE_ENV = process.env.NODE_ENV || 'development';
+  app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(PORT, () => {
     Logger.log(`Listening on port: ${PORT}`);
     Logger.log(`Current node environment: ${NODE_ENV}`);
