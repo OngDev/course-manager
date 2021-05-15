@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Logger, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Logger,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CourseCreationDTO } from './dto/create-course.dto';
 import { CourseUpdationDTO } from './dto/update-course.dto';
 import { Course } from './model';
@@ -9,7 +18,7 @@ export class CourseController {
   constructor(
     private readonly logger: Logger,
     private readonly courseService: CourseService,
-  ) { }
+  ) {}
 
   @Get()
   findAll(): Promise<Course[]> {
@@ -39,7 +48,10 @@ export class CourseController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() courseDTO: CourseUpdationDTO): Promise<Course> {
+  update(
+    @Param('id') id: string,
+    @Body() courseDTO: CourseUpdationDTO,
+  ): Promise<Course> {
     try {
       return this.courseService.update(id, courseDTO);
     } catch (error) {

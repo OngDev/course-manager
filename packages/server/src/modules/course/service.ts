@@ -11,7 +11,7 @@ export class CourseService {
     private readonly logger: Logger,
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
-  ) { }
+  ) {}
 
   createAndSave(courseDTO: CourseCreationDTO): Promise<Course> {
     try {
@@ -36,10 +36,13 @@ export class CourseService {
       this.logger.error(error);
     }
   }
-  async update(id: string, updateCourseDto: CourseUpdationDTO): Promise<Course> {
+  async update(
+    id: string,
+    updateCourseDto: CourseUpdationDTO,
+  ): Promise<Course> {
     try {
-      await this.courseRepository.update({ id }, { ...updateCourseDto })
-      return this.courseRepository.findOne({ id })
+      await this.courseRepository.update({ id }, { ...updateCourseDto });
+      return this.courseRepository.findOne({ id });
     } catch (error) {
       this.logger.error(error);
     }
@@ -47,8 +50,8 @@ export class CourseService {
 
   async remove(id: string): Promise<any> {
     try {
-      await this.courseRepository.delete({ id })
-      return { message: 'ok' }
+      await this.courseRepository.delete({ id });
+      return { message: 'ok' };
     } catch (error) {
       this.logger.error(error);
     }
