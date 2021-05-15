@@ -3,9 +3,10 @@ import style from './../../../styles/video.css';
 
 interface IProps {
     videoRef: React.RefObject<HTMLVideoElement>;
+    endVideo: () => void;
 }
 
-const VideoDuration: React.FC<IProps> = ({ videoRef }) => {
+const VideoDuration: React.FC<IProps> = ({ videoRef, endVideo }) => {
     const [percent, setPercent] = useState<string>('0%');
 
     const [currentSeconds, setCurrentSeconds] = useState(0);
@@ -39,12 +40,17 @@ const VideoDuration: React.FC<IProps> = ({ videoRef }) => {
             video.addEventListener('timeupdate', () => {
                 setCurrentSeconds(Math.floor(video.currentTime));
                 setPercent(((video.currentTime / video.duration) * 100) + '%');
+                if (video.currentTime === video.duration) {
+                    endVideo();
+                }
             });
             video.onloadedmetadata = () => {
                 setDurationSeconds(Math.floor(video.duration));
             }
         }
-    }, [videoRef]);
+
+        return video?.removeEventListener('timeupdate', () => {});
+    }, [endVideo, videoRef]);
 
     return (
         <div className={style.Duration} onClick={selectTime} ref={barRef}>
@@ -55,4 +61,4 @@ const VideoDuration: React.FC<IProps> = ({ videoRef }) => {
     )
 }
 
-export default VideoDuration;
+export default React.memo(VideoDuration);
