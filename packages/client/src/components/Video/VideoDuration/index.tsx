@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import style from './../../../styles/video.css';
 
 interface IProps {
@@ -8,48 +8,48 @@ interface IProps {
 const VideoDuration: React.FC<IProps> = ({ videoRef }) => {
     const [percent, setPercent] = useState<string>('0%');
 
-    const [currentTime, setCurrentTime] = useState(0);
-    const [currentMinutes, setCurrentMinutes] = useState(0);
-    const [currentHourse, setCurrentHourse] = useState(0);
+    const [currentSeconds, setCurrentSeconds] = useState(0);
 
-    const [duration, setDuration] = useState(0);
-    const [durationMinutes, setDurationMinutes] = useState(0);
-    const [durationtHourse, setDurationtHourse] = useState(0);
+    const [durationSeconds, setDurationSeconds] = useState(0);
 
-    const getTimeVideo = (type: 'duration' | 'current') => {
-        const isDuration = (type === 'duration');
-        const hourse = isDuration ? durationtHourse : currentHourse;
-        const minutes = isDuration ? durationMinutes : currentMinutes;
-        const milliseconds = isDuration ? duration : currentTime;
-        return convertTime(hourse) + ':' + convertTime(minutes) + ':' + convertTime(milliseconds);
+    const barRef = useRef<any>(null)
+
+    const convertSecondsToTime = (seconds: number) => {
+        let time = '00:00:00';
+
+        if (seconds) {
+            time = new Date(seconds * 1000).toISOString().substr(11, 8);
+        }
+
+        return time;
     }
 
-    const convertTime = (time: string | number) => {
-        const newTime = typeof time === 'string' ? parseInt(time) : time;
-        return newTime < 10 ? '0' + time.toString() : time;
+    const selectTime = (event: React.MouseEvent<HTMLDivElement>) => {
+        const bar = barRef.current;
+        const video = videoRef.current;
+        if (bar && video) {
+            const progressTime = (event.nativeEvent.offsetX / bar.offsetWidth) * video.duration;
+            video.currentTime = progressTime;
+        }
     }
 
     useEffect(() => {
         const video = videoRef.current;
         if (video) {
             video.addEventListener('timeupdate', () => {
-                setCurrentTime(Math.floor(video.currentTime));
-                setCurrentMinutes(Math.floor(video.currentTime / 60));
-                setCurrentHourse(Math.floor(video.currentTime / (60 * 60)));
+                setCurrentSeconds(Math.floor(video.currentTime));
                 setPercent(((video.currentTime / video.duration) * 100) + '%');
             });
             video.onloadedmetadata = () => {
-                setDuration(Math.floor(video.duration));
-                setDurationMinutes(Math.floor(video.duration / 60));
-                setDurationtHourse(Math.floor(video.duration / (60 * 60)));
+                setDurationSeconds(Math.floor(video.duration));
             }
         }
     }, [videoRef]);
 
     return (
-        <div className={style.Duration}>
+        <div className={style.Duration} onClick={selectTime} ref={barRef}>
             <div className={style.Time} style={{width: percent}}>
-                <span>{getTimeVideo('current')} / {getTimeVideo('duration')}</span>
+                <span>{convertSecondsToTime(currentSeconds)} / {convertSecondsToTime(durationSeconds)}</span>
             </div>
         </div>
     )
