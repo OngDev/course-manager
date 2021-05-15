@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -14,6 +14,7 @@ import { CommentReactionsModule } from './comment-reactions/comment-reactions.mo
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    CacheModule.register(),
     ExampleModule,
     CourseModule,
     VideoModule,
