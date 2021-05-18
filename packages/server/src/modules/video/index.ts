@@ -7,6 +7,10 @@ import { Video } from './model';
 @Module({
   imports: [TypeOrmModule.forFeature([Video])],
   controllers: [VideoController],
-  providers: [VideoService, Logger, { provide: CACHE_MANAGER, useClass: CacheModule }],
+  providers: [
+    VideoService,
+    Logger,
+    { provide: CACHE_MANAGER, useClass: CacheModule },
+  ],
 })
 export class VideoModule {}

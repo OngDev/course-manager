@@ -1,3 +1,4 @@
+import { SubLine } from './entities/sub-line.entity';
 import {
   Controller,
   Get,
@@ -6,11 +7,13 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { SubLinesService } from './sub-lines.service';
 import { SubLineCreationDTO } from './dto/create-sub-line.dto';
 import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
 
 @ApiTags('Sub-lines')
 @Controller('sub-lines')
@@ -18,30 +21,38 @@ export class SubLinesController {
   constructor(private readonly subLinesService: SubLinesService) {}
 
   @Post()
-  create(@Body() subLineCreationDTO: SubLineCreationDTO) {
-    return this.subLinesService.create(subLineCreationDTO);
+  async create(
+    @Body() subLineCreationDTO: SubLineCreationDTO,
+  ): Promise<SubLine> {
+    return await this.subLinesService.create(subLineCreationDTO);
   }
 
   @Get()
-  findAll() {
-    return this.subLinesService.findAll();
+  async findAll(
+    @Query() paginationQuery: PaginationQueryDTO,
+  ): Promise<{
+    data: SubLine[];
+    totalPage: number;
+    totalCount: number;
+  }> {
+    return await this.subLinesService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subLinesService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<SubLine> {
+    return await this.subLinesService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() subLineUpdatingDTO: SubLineUpdatingDTO,
-  ) {
-    return this.subLinesService.update(+id, subLineUpdatingDTO);
+  ): Promise<SubLine> {
+    return await this.subLinesService.update(id, subLineUpdatingDTO);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.subLinesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.subLinesService.remove(id);
   }
 }

@@ -9,5 +9,6 @@ import { Subtitle } from './entities/subtitle.entity';
   imports: [TypeOrmModule.forFeature([Subtitle, Video])],
   controllers: [SubtitlesController],
   providers: [SubtitlesService, Logger],
+  exports: [SubtitlesService],
 })
 export class SubtitlesModule {}
