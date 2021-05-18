@@ -37,6 +37,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dotenv": "^8.2.0",
+    "nest-keycloak-connect": "^1.5.3",
     "nest-winston": "^1.5.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
