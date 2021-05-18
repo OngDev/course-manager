@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import style from '@styles/video.module.css';
+import style from '@styles/Video.module.css';
 
 interface IProps {
   videoRef: React.RefObject<HTMLVideoElement>;

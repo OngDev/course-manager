@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import style from '@styles/video.module.css';
+import style from '@styles/Video.module.css';
 import VideoItem from '../VideoItem';
 
 const VideoList = () => {

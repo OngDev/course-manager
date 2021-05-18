@@ -1,6 +1,6 @@
 import { IVideo } from '@interfaces/video';
 import React from 'react';
-import style from '@styles/video.module.css';
+import style from '@styles/Video.module.css';
 
 const VideoItem: React.FC<IVideo> = ({
   username,
