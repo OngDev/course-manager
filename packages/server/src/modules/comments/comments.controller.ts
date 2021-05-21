@@ -14,6 +14,7 @@ import { CommentUpdatingDTO } from './dto/update-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
 import { Comment } from './entities/comment.entity';
+import { CommentDTO } from './dto/comment.dto';
 
 @ApiTags('Comments')
 @Controller('comments')
@@ -23,7 +24,7 @@ export class CommentsController {
   @Post()
   async create(
     @Body() commentCreationDTO: CommentCreationDTO,
-  ): Promise<Comment> {
+  ): Promise<CommentDTO> {
     return await this.commentsService.create(commentCreationDTO);
   }
 
@@ -31,7 +32,7 @@ export class CommentsController {
   async findAll(
     @Query() paginationQuery: PaginationQueryDTO,
   ): Promise<{
-    data: Comment[];
+    data: CommentDTO[];
     totalPage: number;
     totalCount: number;
   }> {
@@ -39,7 +40,7 @@ export class CommentsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Comment> {
+  async findOne(@Param('id') id: string): Promise<CommentDTO> {
     return await this.commentsService.findOne(id);
   }
 
@@ -47,7 +48,7 @@ export class CommentsController {
   async update(
     @Param('id') id: string,
     @Body() commentUpdatingDTO: CommentUpdatingDTO,
-  ): Promise<Comment> {
+  ): Promise<CommentDTO> {
     return await this.commentsService.update(id, commentUpdatingDTO);
   }
 

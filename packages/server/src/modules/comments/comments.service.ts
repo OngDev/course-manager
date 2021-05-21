@@ -6,6 +6,7 @@ import { Comment } from './entities/comment.entity';
 import { Repository } from 'typeorm';
 import { catchError } from 'src/common/helpers/catch-error';
 import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
+import { CommentDTO } from './dto/comment.dto';
 
 @Injectable()
 export class CommentsService {
@@ -15,14 +16,16 @@ export class CommentsService {
     private readonly logger: Logger,
   ) {}
 
-  async create(commentCreationDTO: CommentCreationDTO): Promise<Comment> {
+  async create(commentCreationDTO: CommentCreationDTO): Promise<CommentDTO> {
     try {
       // miss check video and user
-      return await this.commentRepository.save({
+      const comment = await this.commentRepository.save({
         ...commentCreationDTO,
         createdBy: '',
         updatedBy: '',
       });
+
+      return await this.findOne(comment.id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -32,7 +35,7 @@ export class CommentsService {
   async findAll(
     paginationQuery: PaginationQueryDTO,
   ): Promise<{
-    data: Comment[];
+    data: CommentDTO[];
     totalPage: number;
     totalCount: number;
   }> {
@@ -40,6 +43,7 @@ export class CommentsService {
       const { limit, offset } = paginationQuery;
 
       const [data, totalCount] = await this.commentRepository.findAndCount({
+        select: ['id', 'content'],
         skip: offset,
         take: limit,
         order: { createdAt: 'DESC' },
@@ -56,9 +60,11 @@ export class CommentsService {
     }
   }
 
-  async findOne(id: string): Promise<Comment> {
+  async findOne(id: string): Promise<CommentDTO> {
     try {
-      return await this.commentRepository.findOne(id);
+      return await this.commentRepository.findOne(id, {
+        select: ['id', 'content'],
+      });
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -68,14 +74,16 @@ export class CommentsService {
   async update(
     id: string,
     commentUpdatingDTO: CommentUpdatingDTO,
-  ): Promise<Comment> {
+  ): Promise<CommentDTO> {
     try {
       const comment = await this.commentRepository.preload({
         id,
         ...commentUpdatingDTO,
       });
 
-      return await this.commentRepository.save(comment);
+      await this.commentRepository.save(comment);
+
+      return await this.findOne(comment.id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);
