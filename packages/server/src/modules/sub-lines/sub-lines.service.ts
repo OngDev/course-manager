@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SubtitlesService } from '../subtitles/subtitles.service';
 import { catchError } from 'src/common/helpers/catch-error';
 import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
+import { SubLineDTO } from './dto/sub-line.dto';
 
 @Injectable()
 export class SubLinesService {
@@ -17,7 +18,7 @@ export class SubLinesService {
     private readonly subtitlesService: SubtitlesService,
   ) {}
 
-  async create(subLineCreationDTO: SubLineCreationDTO): Promise<SubLine> {
+  async create(subLineCreationDTO: SubLineCreationDTO): Promise<SubLineDTO> {
     try {
       // miss check supporter
       const subtitle = await this.subtitlesService.findOne(
@@ -26,12 +27,15 @@ export class SubLinesService {
 
       if (!subtitle) throw new NotFoundException('Subtitle is not exist');
 
-      return await this.subLineRepository.save({
-        ...subLineCreationDTO,
+      const subLine = await this.subLineRepository.save({
+        subtitle,
+        content: subLineCreationDTO.content,
         timestamp: new Date(subLineCreationDTO.timestamp).toISOString(),
         createdBy: '',
         updatedBy: '',
       });
+
+      return await this.findOne(subLine.id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -41,7 +45,7 @@ export class SubLinesService {
   async findAll(
     paginationQuery: PaginationQueryDTO,
   ): Promise<{
-    data: SubLine[];
+    data: SubLineDTO[];
     totalPage: number;
     totalCount: number;
   }> {
@@ -49,9 +53,11 @@ export class SubLinesService {
       const { limit, offset } = paginationQuery;
 
       const [data, totalCount] = await this.subLineRepository.findAndCount({
+        select: ['id', 'timestamp', 'content', 'subtitle'],
+        relations: ['subtitle'],
         skip: offset,
         take: limit,
-        order: { createdAt: 'DESC' },
+        order: { id: 'DESC' },
       });
 
       return {
@@ -65,9 +71,12 @@ export class SubLinesService {
     }
   }
 
-  async findOne(id: string): Promise<SubLine> {
+  async findOne(id: string): Promise<SubLineDTO> {
     try {
-      return await this.subLineRepository.findOne(id);
+      return await this.subLineRepository.findOne(id, {
+        select: ['id', 'timestamp', 'content', 'subtitle'],
+        relations: ['subtitle'],
+      });
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -77,14 +86,16 @@ export class SubLinesService {
   async update(
     id: string,
     subLineUpdatingDTO: SubLineUpdatingDTO,
-  ): Promise<SubLine> {
+  ): Promise<SubLineDTO> {
     try {
       const subtitle = await this.subLineRepository.preload({
         id,
         ...subLineUpdatingDTO,
       });
 
-      return await this.subLineRepository.save(subtitle);
+      const subLine = await this.subLineRepository.save(subtitle);
+
+      return await this.findOne(subLine.id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);

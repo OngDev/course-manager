@@ -14,6 +14,7 @@ import { SubLineCreationDTO } from './dto/create-sub-line.dto';
 import { SubLineUpdatingDTO } from './dto/update-sub-line.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
+import { SubLineDTO } from './dto/sub-line.dto';
 
 @ApiTags('Sub-lines')
 @Controller('sub-lines')
@@ -23,7 +24,7 @@ export class SubLinesController {
   @Post()
   async create(
     @Body() subLineCreationDTO: SubLineCreationDTO,
-  ): Promise<SubLine> {
+  ): Promise<SubLineDTO> {
     return await this.subLinesService.create(subLineCreationDTO);
   }
 
@@ -31,7 +32,7 @@ export class SubLinesController {
   async findAll(
     @Query() paginationQuery: PaginationQueryDTO,
   ): Promise<{
-    data: SubLine[];
+    data: SubLineDTO[];
     totalPage: number;
     totalCount: number;
   }> {
@@ -39,7 +40,7 @@ export class SubLinesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<SubLine> {
+  async findOne(@Param('id') id: string): Promise<SubLineDTO> {
     return await this.subLinesService.findOne(id);
   }
 
@@ -47,7 +48,7 @@ export class SubLinesController {
   async update(
     @Param('id') id: string,
     @Body() subLineUpdatingDTO: SubLineUpdatingDTO,
-  ): Promise<SubLine> {
+  ): Promise<SubLineDTO> {
     return await this.subLinesService.update(id, subLineUpdatingDTO);
   }
 
