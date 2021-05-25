@@ -2,6 +2,13 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import 'dotenv/config';
 
+type JWT_CONFIG = {
+  secret: string;
+  signOptions: {
+    expiresIn: string;
+  },
+};
+
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
   private getValue(key: string, throwOnMissing = true): string {
@@ -49,6 +56,13 @@ class ConfigService {
       },
 
       ssl: this.isProduction(),
+    };
+  }
+
+  public getJwtConfig(): JWT_CONFIG {
+    return {
+      secret: this.getValue('JWT_SECRET'),
+      signOptions: { expiresIn: '60s' }
     };
   }
 }
