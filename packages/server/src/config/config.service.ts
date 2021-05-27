@@ -1,7 +1,13 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import 'dotenv/config';
-import { KeycloakConnectOptions } from 'nest-keycloak-connect/interface/keycloak-connect-options.interface';
+
+type JWT_CONFIG = {
+  secret: string;
+  signOptions: {
+    expiresIn: string;
+  },
+};
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
@@ -53,14 +59,10 @@ class ConfigService {
     };
   }
 
-  public getKeycloakConfig(): KeycloakConnectOptions {
+  public getJwtConfig(): JWT_CONFIG {
     return {
-      realm: this.getValue('KEYCLOAK_REALM'),
-      secret: this.getValue('KEYCLOAK_SECRET'),
-      cookieKey: 'KEYCLOAK_JWT',
-      logLevels: ['warn'],
-      clientId: this.getValue('KEYCLOAK_CLIENT_ID'),
-      authServerUrl: this.getValue('KEYCLOAK_AUTH_SERVER'),
+      secret: this.getValue('JWT_SECRET'),
+      signOptions: { expiresIn: '60s' }
     };
   }
 }
