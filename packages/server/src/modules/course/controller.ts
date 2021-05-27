@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { CourseCreationDTO } from './dto/create-course.dto';
 import { CourseUpdationDTO } from './dto/update-course.dto';
-import { Course } from './model';
 import { CourseService } from './service';
 
 @Controller('courses')
