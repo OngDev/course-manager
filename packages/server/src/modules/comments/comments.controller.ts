@@ -6,41 +6,54 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CommentCreationDTO } from './dto/create-comment.dto';
 import { CommentUpdatingDTO } from './dto/update-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
+import { Comment } from './entities/comment.entity';
+import { CommentDTO } from './dto/comment.dto';
+
 @ApiTags('Comments')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Post()
-  create(@Body() commentCreationDTO: CommentCreationDTO) {
-    return this.commentsService.create(commentCreationDTO);
+  async create(
+    @Body() commentCreationDTO: CommentCreationDTO,
+  ): Promise<CommentDTO> {
+    return await this.commentsService.create(commentCreationDTO);
   }
 
   @Get()
-  findAll() {
-    return this.commentsService.findAll();
+  async findAll(
+    @Query() paginationQuery: PaginationQueryDTO,
+  ): Promise<{
+    data: CommentDTO[];
+    totalPage: number;
+    totalCount: number;
+  }> {
+    return await this.commentsService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.commentsService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<CommentDTO> {
+    return await this.commentsService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() commentUpdatingDTO: CommentUpdatingDTO,
-  ) {
-    return this.commentsService.update(+id, commentUpdatingDTO);
+  ): Promise<CommentDTO> {
+    return await this.commentsService.update(id, commentUpdatingDTO);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.commentsService.remove(id);
   }
 }
