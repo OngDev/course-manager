@@ -5,7 +5,7 @@ import { isMatch, hashPassword } from './utils';
 import { RegisterPayload } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import User from '../user/model';
+import { User } from '../user/model';
 import Role from '../role/model';
 
 @Injectable()

@@ -5,17 +5,42 @@ import {
   JoinTable,
   ManyToMany,
   OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import Account from '../account/model';
 import Role from '../role/model';
 import { BaseEntity } from '../base/base.entity';
-import Admin from './usertypes/admin';
-import Supporter from './usertypes/supporter';
-import Mod from './usertypes/mod';
+import { IAdmin, IMod, ISupporter, IUser } from './types';
 
+@Entity('Supporters')
+class Supporter implements ISupporter {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @OneToOne('User', 'supporter')
+  user: IUser;
+}
+
+@Entity('Admins')
+class Admin implements IAdmin {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @OneToOne('User', 'admin')
+  user: IUser;
+}
+
+@Entity('Mods')
+class Mod implements IMod {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @OneToOne('User', 'mod')
+  user: IUser;
+}
 @Entity('Users')
-export default class User extends BaseEntity {
+class User extends BaseEntity implements IUser {
   @Column({ type: 'varchar', unique: true })
   @IsNotEmpty({ message: 'Email is required' })
   @IsEmail({}, { message: 'Email is not valid' })
@@ -32,15 +57,17 @@ export default class User extends BaseEntity {
   @JoinTable()
   roles: Role[];
 
-  @OneToOne(() => Admin, (admin) => admin.user)
+  @OneToOne('Admin', 'user')
   @JoinColumn()
-  admin?: Admin;
+  admin?: IAdmin;
 
-  @OneToOne(() => Supporter, (supporter) => supporter.user)
+  @OneToOne('Supporter', 'user')
   @JoinColumn()
-  supporter?: Supporter;
+  supporter?: ISupporter;
 
-  @OneToOne(() => Mod, (mod) => mod.user)
+  @OneToOne('Mod', 'user')
   @JoinColumn()
-  mod?: Mod;
+  mod?: IMod;
 }
+
+export { User, Admin, Supporter, Mod };

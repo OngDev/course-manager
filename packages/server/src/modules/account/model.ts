@@ -1,6 +1,6 @@
 import { Column, Entity, OneToOne } from 'typeorm';
 import { BaseEntity } from '../base/base.entity';
-import User from '../user/model';
+import { User } from '../user/model';
 
 @Entity('Accounts')
 export default class Account extends BaseEntity {
