@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
+import { BaseEntity } from '../base/base.entity';
+import User from '../user/model';
 
 @Entity('Accounts')
 export default class Account extends BaseEntity {
@@ -8,7 +10,6 @@ export default class Account extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
   password: string;
 
-  // Map to UserDetail
-  //   @Column({ type: 'varchar', length: 300 })
-  //   userId: string;
+  @OneToOne(() => User, (user) => user.account)
+  user: User;
 }

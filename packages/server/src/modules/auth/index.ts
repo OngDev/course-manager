@@ -13,7 +13,7 @@ import { JwtStrategy } from './strategies/jwt';
     PassportModule,
     JwtModule.register(configService.getJwtConfig()),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, Logger],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

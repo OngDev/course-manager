@@ -1,18 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Logger } from 'winston';
-import { Video } from '../video/model';
 import Account from './model';
 
 @Injectable()
 export class AccountService {
-  createNewAccount(account: { username: string; password: string; }) {
-      throw new Error('Method not implemented.');
-  }
   constructor(
-    private readonly logger: Logger,
-    @InjectRepository(Video)
+    @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
   ) {}
 
@@ -22,5 +16,12 @@ export class AccountService {
         username,
       },
     });
+  }
+
+  async createNewAccount(account: {
+    username: string;
+    password: string;
+  }): Promise<Account> {
+    return this.accountRepository.save(account);
   }
 }
