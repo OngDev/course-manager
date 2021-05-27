@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../user/model';
 import Role from '../role/model';
+import { AccountCreationDTO } from '../account/dto/account-creation.dto';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +44,7 @@ export class AuthService {
   }: RegisterPayload): Promise<any> {
     try {
       const hashedPassword = await hashPassword(rawPass);
-      const account = {
+      const account: AccountCreationDTO = {
         username: email,
         password: hashedPassword,
       };
