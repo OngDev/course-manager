@@ -1,0 +1,111 @@
+.blurBg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px) saturate(100%) contrast(45%) brightness(130%);
+  z-index: 2;
+}
+.formHeader {
+  width: 100%;
+  text-align: left;
+  font-size: 2.5rem;
+  color: #fff1dc;
+  font-weight: 900;
+  margin-bottom: 7px;
+}
+
+.loginNavigator {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.loginNavigator span {
+  color: #ffb347;
+  cursor: pointer;
+}
+
+#registerForm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #2c2c2c;
+  width: 452px;
+  height: 640px;
+  border-radius: 20px;
+  box-shadow: 30px 30px 60px rgba(0, 0, 0, 0.25);
+  padding: 37px 37px 0 37px;
+}
+
+.formItem {
+  width: 100%;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.formItem label {
+  font-family: Montserrat;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 13px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.formItem input {
+  width: 100%;
+  background-color: #2c2c2c;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Montserrat;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem;
+  text-align: left;
+  padding: 5px 0;
+  border: none;
+  border-bottom: solid 2px white;
+}
+
+.formItem input:active {
+  outline: none;
+}
+
+.formItem input:focus-visible {
+  outline: none;
+}
+
+.formItem input:internal-autofill-selected {
+  background-color: #2c2c2c;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.submitButton {
+  background: linear-gradient(180deg, #1877f2 0%, #1877f2 100%);
+  border-radius: 10px;
+  height: 55px;
+  width: 100%;
+  filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.15));
+  color: #ffffff;
+
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  margin-top: 15px;
+}
