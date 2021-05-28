@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AuthService } from './service';
 import { AccountModule } from '../account';
 import { PassportModule } from '@nestjs/passport';
