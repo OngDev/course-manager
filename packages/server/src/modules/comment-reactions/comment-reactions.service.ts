@@ -1,13 +1,13 @@
-import { Comment } from './../comments/entities/comment.entity';
-import { Injectable, Logger } from '@nestjs/common';
+import { CommentReaction } from 'src/modules/comment-reactions/entities/comment-reaction.entity';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CommentReaction } from '../comment-reactions/entities/comment-reaction.entity';
+import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
+import { catchError } from 'src/common/helpers/catch-error';
 import { Repository } from 'typeorm';
 import { CommentReactionCreationDTO } from '../comment-reactions/dto/create-comment-reaction.dto';
-import { catchError } from 'src/common/helpers/catch-error';
-import { PaginationQueryDTO } from 'src/common/dto/pagination-query.dto';
 import { CommentReactionUpdatingDTO } from '../comment-reactions/dto/update-comment-reaction.dto';
 import { CommentsService } from '../comments/comments.service';
+import { CommentReactionDTO } from './dto/comment-reaction.dto';
 
 @Injectable()
 export class CommentReactionsService {
@@ -20,18 +20,23 @@ export class CommentReactionsService {
 
   async create(
     commentReactionCreationDTO: CommentReactionCreationDTO,
-  ): Promise<CommentReaction> {
+  ): Promise<CommentReactionDTO> {
     try {
       // miss check user
       const comment = await this.commentsService.findOne(
-        +commentReactionCreationDTO.commentId,
+        commentReactionCreationDTO.commentId,
       );
 
-      return await this.commentReactionRepository.save({
+      if (!comment) throw new NotFoundException('Comment is not exist');
+
+      const commentReaction = await this.commentReactionRepository.save({
         ...commentReactionCreationDTO,
+        comment,
         createdBy: '',
         updatedBy: '',
       });
+
+      return this.findOne(commentReaction.id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -39,9 +44,10 @@ export class CommentReactionsService {
   }
 
   async findAll(
+    commentId: string,
     paginationQuery: PaginationQueryDTO,
   ): Promise<{
-    data: CommentReaction[];
+    data: CommentReactionDTO[];
     totalPage: number;
     totalCount: number;
   }> {
@@ -52,9 +58,13 @@ export class CommentReactionsService {
         data,
         totalCount,
       ] = await this.commentReactionRepository.findAndCount({
+        select: ['id', 'type', 'comment'],
+        where: { comment: commentId },
+        relations: ['comment'],
+        loadRelationIds: true,
         skip: offset,
         take: limit,
-        order: { createdAt: 'DESC' },
+        order: { id: 'DESC' },
       });
 
       return {
@@ -68,9 +78,12 @@ export class CommentReactionsService {
     }
   }
 
-  async findOne(id: string): Promise<CommentReaction> {
+  async findOne(id: string): Promise<CommentReactionDTO> {
     try {
-      return await this.commentReactionRepository.findOne(id);
+      return await this.commentReactionRepository.findOne(id, {
+        select: ['id', 'type', 'comment'],
+        relations: ['comment'],
+      });
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -80,14 +93,14 @@ export class CommentReactionsService {
   async update(
     id: string,
     commentReactionUpdatingDTO: CommentReactionUpdatingDTO,
-  ): Promise<CommentReaction> {
+  ): Promise<CommentReactionDTO> {
     try {
-      const commentReaction = await this.commentReactionRepository.preload({
+      await this.commentReactionRepository.save({
         id,
         ...commentReactionUpdatingDTO,
       });
 
-      return await this.commentReactionRepository.save(commentReaction);
+      return this.findOne(id);
     } catch (error) {
       this.logger.error(error);
       catchError(error);

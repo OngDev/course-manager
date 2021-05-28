@@ -10,6 +10,7 @@ import { SubtitlesModule } from './subtitles/subtitles.module';
 import { CommentsModule } from './comments/comments.module';
 import { SubLinesModule } from './sub-lines/sub-lines.module';
 import { CommentReactionsModule } from './comment-reactions/comment-reactions.module';
+import { AuthModule } from './auth';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CommentReactionsModule } from './comment-reactions/comment-reactions.mo
     CommentsModule,
     SubLinesModule,
     CommentReactionsModule,
+    AuthModule,
     ConfigModule.forRoot(),
   ],
 })
