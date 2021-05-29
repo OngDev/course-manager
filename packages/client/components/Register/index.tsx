@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import FormItem from '@components/FormItem';
+import { useRef, useState } from 'react';
 import styles from './index.module.css';
 
 export interface RegisterFormData {
@@ -6,14 +8,23 @@ export interface RegisterFormData {
   password: string;
   retypedPassword: string;
   email: string;
-  fullName: string;
+  fullname: string;
 }
 
 export default function RegisterModal() {
-  const { register, handleSubmit } = useForm<RegisterFormData>();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    watch
+  } = useForm<RegisterFormData>();
+  const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const password = useRef({});
+  password.current = watch('password', '');
 
   const submitForm = async (data: RegisterFormData) => {
     console.log(data);
+    // TODO: call api to server
   };
 
   const toggleLoginPage = () => {};
@@ -24,50 +35,105 @@ export default function RegisterModal() {
       <form id={styles.registerForm} onSubmit={handleSubmit(submitForm)}>
         <div className={styles.formHeader}>Sign Up</div>
         <div className={styles.loginNavigator}>
-          I have an account! <span onClick={toggleLoginPage}>Click here</span>
+          I have an account!{' '}
+          <span
+            tabIndex={0}
+            role="button"
+            onClick={toggleLoginPage}
+            onKeyDown={toggleLoginPage}
+          >
+            Click here
+          </span>
         </div>
-        <div className={styles.formItem}>
-          <label htmlFor="usernameInput"> Username:</label>
-          <input
-            id="usernameInput"
-            {...register('username', { required: true })}
-            name="username"
-            type="text"
-          />
-        </div>
-        <div className={styles.formItem}>
-          <label> Password:</label>
-          <input
-            {...register('password', { required: true })}
-            name="password"
-            type="password"
-          />
-        </div>
-        <div className={styles.formItem}>
-          <label> Retyped Password:</label>
-          <input
-            {...register('retypedPassword', { required: true })}
-            name="retypedPassword"
-            type="password"
-          />
-        </div>
-        <div className={styles.formItem}>
-          <label> Email:</label>
-          <input
-            {...register('email', { required: true })}
-            name="email"
-            type="email"
-          />
-        </div>
-        <div className={styles.formItem}>
-          <label> Full Name:</label>
-          <input
-            {...register('fullName', { required: true })}
-            name="fullName"
-            type="text"
-          />
-        </div>
-        <input className={styles.submitButton} type="submit" />
+        <FormItem
+          isFirstVisit={isFirstVisit}
+          labelName="Username"
+          name="username"
+          placeholder="Enter your username"
+          inputId="usernameInput"
+          type="text"
+          error={errors.username}
+          register={register('username', {
+            required: 'Username is required',
+            minLength: {
+              value: 8,
+              message: 'Username must have at least 8 characters'
+            }
+          })}
+        />
+        <FormItem
+          isFirstVisit={isFirstVisit}
+          labelName="Fullname"
+          name="fullname"
+          placeholder="Enter your fullname"
+          inputId="fullnameInput"
+          type="text"
+          error={errors.fullname}
+          register={register('fullname', {
+            required: 'Fullname is required'
+          })}
+        />
+        <FormItem
+          isFirstVisit={isFirstVisit}
+          labelName="Email"
+          name="email"
+          placeholder="Enter your email"
+          inputId="emailInput"
+          type="text"
+          error={errors.email}
+          register={register('email', {
+            required: {
+              value: true,
+              message: 'Email is required'
+            },
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'Invalid email address'
+            }
+          })}
+        />
+        <FormItem
+          isFirstVisit={isFirstVisit}
+          labelName="Password"
+          name="password"
+          placeholder="Enter your password"
+          inputId="passwordInput"
+          type="password"
+          error={errors.password}
+          register={register('password', {
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password must have at least 8 characters'
+            }
+          })}
+        />
+        <FormItem
+          isFirstVisit={isFirstVisit}
+          labelName="RetypedPassword"
+          name="retypedPassword"
+          placeholder="Enter your password"
+          inputId="retypedPasswordInput"
+          type="password"
+          error={errors.retypedPassword}
+          register={register('retypedPassword', {
+            required: 'Username is required',
+            minLength: {
+              value: 8,
+              message: 'Username must have at least 8 characters'
+            },
+            validate: value =>
+              value === password.current || 'The passwords do not match'
+          })}
+        />
+        <input
+          className={styles.submitButton}
+          onClick={() => {
+            setIsFirstVisit(false);
+          }}
+          type="submit"
+          value="Sign Up"
+        />
       </form>
     </>
   );
