@@ -1,14 +1,17 @@
-import React from 'react';
-import { TEST_VIDEO } from '@constants/videos';
-import VideoViewer from '@components/Video/VideoViewer';
+import React, { Fragment } from 'react';
+import Layout from '@components/Layouts'
+import CourseList from '@components/Video/VideoList'
 import Register from '@components/Register';
-import styles from './index.module.css';
 
-export default function() {
+export default function Home() {
   return (
-    <div className={styles.normal}>
-      <VideoViewer urlVideo={TEST_VIDEO} />
+    <Fragment>
       <Register />
-    </div>
+      <Layout title="Courses">
+        <div>
+          <CourseList />
+        </div>
+      </Layout>
+    </Fragment>
   );
 }

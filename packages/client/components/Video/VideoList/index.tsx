@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from '@styles/Video.module.css';
 import VideoItem from '../VideoItem';
+import courses from './courses'
 
 const VideoList = () => {
-  const [videos, setVideos] = useState([]);
-  useEffect(() => {
-    fetch('http://localhost:8000/api/videos')
-      .then(res => res.json())
-      .then(data => {
-        setVideos(data.videos);
-      });
-  }, []);
+  const [videos] = useState(courses);
   return (
     <div className={style.videoList}>
       {videos.length > 0 &&
@@ -23,12 +17,8 @@ const VideoList = () => {
               key={index}
               username={username}
               subname={subname}
-              avatar={`https://picsum.photos/200/300?random=${Math.floor(
-                Math.random() * 50
-              )}`}
-              backgroundVideo={`https://picsum.photos/200/300?random=${Math.floor(
-                Math.random() * 50
-              )}`}
+              avatar={`https://picsum.photos/200/300?v=${index}`}
+              backgroundVideo={`https://picsum.photos/200/300?v=${index}`}
               time={time}
               desc={desc}
             />
