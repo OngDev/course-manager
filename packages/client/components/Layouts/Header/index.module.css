@@ -1,0 +1,41 @@
+.header {
+  margin: 58px auto;
+  max-width: 826px;
+}
+
+.wrapperHeader {
+  display: flex;
+  align-items: center;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 15px;
+}
+
+.searchIcon {
+  padding-right: 22px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
+}
+
+.headerLeft {
+  flex: 1 1;
+}
+
+.headerRight {
+  padding-left: 75px;
+}
+
+.icons {
+  list-style: none;
+  padding: 0;
+}

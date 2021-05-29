@@ -1,0 +1,11 @@
+.logo {
+  width: 56px;
+  height: 56px;
+  left: 62px;
+  top: 84px;
+  background: rgba(44, 44, 44, 0.9);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

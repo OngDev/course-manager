@@ -1,12 +1,13 @@
 import React from 'react';
-import { TEST_VIDEO } from '@constants/videos';
-import VideoViewer from '@components/Video/VideoViewer';
-import styles from './index.module.css';
+import Layout from '@components/Layouts'
+import CourseList from '@components/Video/VideoList'
 
-export default function() {
+export default function Home() {
   return (
-    <div className={styles.normal}>
-      <VideoViewer urlVideo={TEST_VIDEO} />
-    </div>
+    <Layout title="Courses">
+      <div>
+        <CourseList/>
+      </div>
+    </Layout>
   );
 }
