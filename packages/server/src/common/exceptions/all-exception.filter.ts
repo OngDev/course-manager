@@ -22,7 +22,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getResponse()
         : 'Internal server';
-    message = message instanceof Object ? message?.message : message;
+    // message = message instanceof Object ? message?.message : message;
     if (message instanceof Array) {
       for (let i = 0; i < message.length; i++) {
         if (message[i].split(' ')[0].includes('.')) {
