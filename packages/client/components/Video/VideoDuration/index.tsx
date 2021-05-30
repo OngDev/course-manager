@@ -45,9 +45,7 @@ const VideoDuration: React.FC<IProps> = ({ videoRef, endVideo }) => {
           endVideo();
         }
       });
-      video.onloadedmetadata = () => {
-        setDurationSeconds(Math.floor(video.duration));
-      };
+      setDurationSeconds(Math.floor(video.duration));
     }
 
     return video?.removeEventListener('timeupdate', () => {});

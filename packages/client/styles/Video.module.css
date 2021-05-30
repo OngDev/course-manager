@@ -103,6 +103,10 @@
   margin: auto;
 }
 
+.VideoDetailWrapper .volume {
+  width: 18px;
+}
+
 .VideoDetailWrapper:hover .Control {
   opacity: 1;
   visibility: visible;
@@ -123,9 +127,7 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
+  align-items: center;
   position: absolute;
   bottom: 36px;
   left: 50%;
@@ -138,8 +140,8 @@
   backdrop-filter: blur(120px);
   border-radius: 15px;
   padding: 8px 23px;
-  opacity: 0;
-  visibility: hidden;
+  /* opacity: 0;
+  visibility: hidden; */
   -webkit-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
@@ -163,6 +165,7 @@
   border-radius: 15px;
   margin-right: 18px;
   cursor: pointer;
+  height: 22px;
 }
 
 .Time {
@@ -182,8 +185,17 @@
 .Time span {
   position: absolute;
   left: 14px;
-  width: 146px;
+  width: 160px;
+  font-size: 14px;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+.Volume img {
+  width: 18px;
+  height: 18px;
+}
+
 
 .SpeedOptions {
   list-style: none;
