@@ -1,0 +1,220 @@
+.courseLessionItem {
+    padding: 22px 0;
+    border-bottom: 1px solid #fff;
+    display: flex;
+    color: #fff;
+    cursor: pointer;
+}
+
+.courseLessionItemChecked {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    margin-right: 10px;
+}
+
+.courseLessionItemTitle {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 7px;
+}
+
+.courseLessionItemLecture {
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.Duration {
+    margin-left: 10px;
+}
+
+.courseComment img {
+    width: 30px;
+}
+
+.courseCommentSearch {
+    display: flex;
+    align-items: center;
+}
+
+.courseCommentSearch input {
+    flex: 1;
+    background: transparent;
+    border: transparent;
+    padding-bottom: 5px;
+    font-size: 17px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.courseCommentAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.courseCommentHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 27px;
+}
+
+.courseCommentHeaderComments {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 20px;
+    color: #fff;
+}
+
+.courseCommentHeaderSort {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.courseCommentHeaderSort img {
+    margin-right: 7px;
+}
+
+.courseCommentItem {
+    display: flex;
+    margin-top: 15px;
+}
+
+.courseCommentItemInfor {
+    color: #fff;
+}
+
+.courseCommentItemInforTitle span:not(:first-child) {
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.courseCommentItemInforTitle span:nth-child(2) {
+    color: #3DA6FF;
+}
+
+.courseCommentItemInforTitle span:nth-child(3) {
+    color: #F5A028;
+}
+
+.courseCommentItemInfor p {
+    margin: 3px 0;
+    font-size: 14px;
+}
+
+.courseCommentItemInfor p span {
+    color: #F5A028;
+}
+
+.courseCommentItemInforAll {
+    color: #3DA6FF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.courseCommentItemInforAll span {
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 6px solid #3DA6FF;
+    margin-right: 8px;
+}
+
+.courseCommentItemComment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.courseCommentItemComment span img {
+    width: 18px;
+    margin-right: 4px;
+}
+
+
+.courseCommentItemComment span {
+    font-size: 12px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.courseCommentItemComment span:last-child {
+    font-weight: bold;
+}
+
+.courseAuthorWrap {
+    color: #fff;
+}
+
+.courseAuthorWrap h2 {
+    margin-top: 0;
+}
+
+.courseAuthorTitle {
+    font-size: 18px;
+    line-height: 22px;
+    text-decoration: underline;
+    margin-bottom: 15px;
+}
+
+.courseAuthorUser {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 19px;
+}
+
+.courseAuthorUser img {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    margin-right: 18px;
+}
+
+.courseAuthorDesc {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.courseSubtitle {
+    background: #484848;
+    border-radius: 15px;
+    padding: 14px 23px;
+    color: #fff;
+    margin-top: 15px;
+}
+
+.courseSubtitle ul {
+    padding: 0;
+    margin: 0;
+}
+
+.courseSubtitle li {
+    display: flex;
+    list-style: none;
+    padding: 8px;
+}
+
+.courseSubtitle li:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
+}
+
+.courseSubtitle li:hover span {
+    color: #FFB347;
+}
+
+.courseSubtitle span {
+    margin-right: 25px;
+}
+
+.courseSubtitle p {
+    margin: 0;
+}
