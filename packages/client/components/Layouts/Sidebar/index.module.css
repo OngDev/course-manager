@@ -1,0 +1,107 @@
+.sidebar {
+  display: inline-block;
+  width: 360px;
+  height: 100vh;
+  padding: 84px 0 0 38px;
+  background: #484848;
+}
+
+.collapsed {
+  width: 180px;
+  padding: 84px 0 0 0;
+}
+
+.collapsed .name {
+  display: none;
+}
+
+.collapsed .itemLabel {
+  display: none;
+}
+
+.sidebar:not(.collapsed) .itemActive {
+  background: #2c2c2c;
+  color: #333;
+  border-radius: 35px 0 0 35px;
+}
+
+.sidebar:not(.collapsed) .itemActive::before,
+.sidebar:not(.collapsed) .itemActive::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 15px 15px 0 0 #2c2c2c;
+}
+
+.itemActive::before {
+  top: -50px;
+}
+
+.itemActive::after {
+  bottom: -50px;
+  transform: rotateY(180deg) rotateZ(180deg);
+}
+
+.sidebarItem {
+  position: relative;
+}
+.collapsed .sidebarItem {
+  text-align: center;
+}
+
+.sidebarItem > a {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 20px 0 20px 26px;
+}
+.collapsed .sidebarItem > a {
+  padding: 20px;
+  display: inline-block;
+  margin: auto;
+}
+
+.itemIcon img {
+  width: 20px;
+  height: 20px;
+  margin-right: 25px;
+}
+
+.collapsed .itemIcon img {
+  margin-right: unset;
+}
+
+.itemLabel {
+  color: #ffb347;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  align-self: end;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.collapsed .brand {
+  justify-content: center;
+}
+
+.logo {
+  padding-left: 20px;
+  padding-bottom: 135px;
+}
+.collapsed .logo {
+  padding-left: unset;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 22px;
+  color: #fff;
+  margin-left: 19px;
+}

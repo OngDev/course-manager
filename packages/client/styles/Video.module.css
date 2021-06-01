@@ -29,6 +29,20 @@
   color: #fff;
 }
 
+@media (min-width: 1440px) {
+  .video {
+    -ms-flex-preferred-size: calc(33.333333% - 40px);
+    flex-basis: calc(33.333333% - 40px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .video {
+    -ms-flex-preferred-size: calc(100% - 40px);
+    flex-basis: calc(100% - 40px);
+  }
+}
+
 .videoHeader {
   display: -webkit-box;
   display: -ms-flexbox;
