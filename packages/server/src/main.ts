@@ -35,6 +35,7 @@ async function bootstrap() {
         new winston.transports.File({ filename: 'combined.log' }),
       ],
     }),
+    cors: true,
   });
   if (!configService.isProduction()) {
     const document = SwaggerModule.createDocument(
