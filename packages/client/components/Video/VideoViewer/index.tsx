@@ -77,7 +77,7 @@ const VideoViewer: React.FC<IProps> = ({ urlVideo }) => {
           )}
         </span>
         <VideoDuration videoRef={videoRef} endVideo={videoEnd} />
-        <span onClick={toggleVolume}>
+        <span className={style.Volume} onClick={toggleVolume}>
           <img src={isVolumeMuted ? MUTED_VOLUME : VOLUME} alt="volume" />
         </span>
         <span>
