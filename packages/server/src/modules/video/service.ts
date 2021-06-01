@@ -18,7 +18,6 @@ import * as fs from 'fs';
 import { FileUploadByS3 } from '../file-upload/strategies/s3';
 import { CoursesService } from '../course/service';
 import { VideoCreationDTO } from './dto/create-video.dto';
-import { async } from 'rxjs';
 @Injectable()
 export class VideosService extends TypeOrmCrudService<Video> {
   private fileUpload: FileUpload;
