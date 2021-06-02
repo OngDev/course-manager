@@ -10,7 +10,8 @@
   "dependencies": {
     "antd": "^3.19.5",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-hook-form": "^7.6.2"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",

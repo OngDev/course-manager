@@ -1,13 +1,13 @@
-.siderbar {
+.NavBar {
   background-color: #484848;
   height: 100%;
-  padding: 30px 0px 10px 10px;
 }
 .Header {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 30px;
+  padding-top: 10px;
   flex-direction: column;
   height: 100px;
 }

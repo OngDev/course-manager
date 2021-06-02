@@ -1,0 +1,31 @@
+.form_group {
+  width: 80%;
+  height: 60px;
+  background: #fff1dc;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 20px;
+}
+.form_input {
+  width: 110%;
+  height: 40px;
+  border: none;
+  background: #fff1dc;
+  color: #181b1a;
+  outline: none;
+}
+.form_controls_prefix {
+  padding-right: 10px;
+}
+.form_error {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .form_group {
+    width: 100%;
+    height: 40px;
+  }
+}

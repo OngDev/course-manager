@@ -4,7 +4,6 @@
   height: 100vh;
 }
 .siderbar {
-  position: relative;
   transition: all 0.3s ease-in-out;
 }
 .siderbar__full {
@@ -14,9 +13,11 @@
   width: calc(100% - 95%);
 }
 .content {
+  position: relative;
   background-color: #2c2c2c;
   color: #fff1dc;
   transition: all 0.3s ease-in-out;
+  padding: 50px;
 }
 .content__full {
   width: calc(100% - 20%);
@@ -35,7 +36,8 @@
 }
 .hamburger {
   position: absolute;
-  right: 5px;
+  left: 5px;
+  top: 0;
 }
 .hamburger:hover {
   cursor: pointer;
@@ -50,4 +52,17 @@
 }
 .active:nth-child(3) {
   transform: translateY(-10px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .siderbar {
+    display: none;
+  }
+  .content__full,
+  .content__small {
+    width: 100%;
+  }
+  .content {
+    padding: 50px 10px 10px 10px;
+  }
 }

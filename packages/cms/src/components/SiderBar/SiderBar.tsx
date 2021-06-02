@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './../../styles/siderbar.css';
+import style from './Siderbar.module.css';
 import icon_home from './../../assets/icon/home.png';
 import icon_progress from './../../assets/icon/progress.png';
 import icon_messages from './../../assets/icon/messages.png';
@@ -20,7 +20,7 @@ const SiderBar: React.FC<SiderBarProps> = ({ active }) => {
   ]
 
   return (
-    <div className={style.siderbar}>
+    <div className={style.NavBar}>
       <div className={style.Header}>
         <img src="https://www.w3schools.com/howto/img_avatar.png" alt="img_avatar" className={style.avatar} />
         <p className={`${style.name} ${active ? `` : `${style.hide}`}`}> Course Manager</p>
