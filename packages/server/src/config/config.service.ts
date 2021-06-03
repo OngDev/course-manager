@@ -6,7 +6,12 @@ type JWT_CONFIG = {
   secret: string;
   signOptions: {
     expiresIn: string;
-  },
+  };
+};
+
+type SeedingOptions = {
+  seeds: string[];
+  factories: string[];
 };
 
 class ConfigService {
@@ -34,7 +39,7 @@ class ConfigService {
     return mode != 'DEV';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  public getTypeOrmConfig(): TypeOrmModuleOptions & SeedingOptions {
     return {
       type: 'postgres',
 
@@ -56,13 +61,17 @@ class ConfigService {
       },
 
       ssl: this.isProduction(),
+      seeds: [join(__dirname, '../seeds', '*.{ts,js}')],
+      factories: [join(__dirname, '../factories', '*.{ts,js}')],
     };
   }
 
   public getJwtConfig(): JWT_CONFIG {
     return {
       secret: this.getValue('JWT_SECRET'),
-      signOptions: { expiresIn: '60s' }
+      signOptions: {
+        expiresIn: `${this.getValue('JWT_EXPIRATION_TIME')}s` || '60s',
+      },
     };
   }
 }
@@ -73,6 +82,8 @@ const configService = new ConfigService(process.env).ensureValues([
   'POSTGRES_USER',
   'POSTGRES_PASSWORD',
   'POSTGRES_DATABASE',
+  'JWT_SECRET',
+  'JWT_EXPIRATION_TIME',
 ]);
 
 export { configService };

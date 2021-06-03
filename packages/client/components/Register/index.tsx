@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
+import axios from 'axios';
 import styles from './index.module.css';
 
 export interface RegisterFormData {
@@ -23,8 +24,17 @@ export default function RegisterModal() {
   password.current = watch('password', '');
 
   const submitForm = async (data: RegisterFormData) => {
-    console.log(data);
-    // TODO: call api to server
+    try {
+      console.log(data);
+      // TODO: call api to server
+      const { retypedPassword, ...body } = data;
+      const response = await axios.post(
+        'http://localhost:3456/auth/register',
+        body
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const toggleLoginPage = () => {};

@@ -1,14 +1,12 @@
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
+import axios from 'axios';
 import styles from './index.module.css';
 
 export interface LoginFormData {
   username: string;
   password: string;
-  retypedPassword: string;
-  email: string;
-  fullname: string;
 }
 
 export default function LoginModal() {
@@ -23,8 +21,19 @@ export default function LoginModal() {
   password.current = watch('password', '');
 
   const submitForm = async (data: LoginFormData) => {
-    console.log(data);
-    // TODO: call api to server
+    try {
+      // TODO: call api to server
+      const response = await axios.post(
+        'http://localhost:3456/auth/login',
+        data,
+        {
+          withCredentials: true
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -57,7 +66,7 @@ export default function LoginModal() {
           type="password"
           error={errors.password}
           register={register('password', {
-            required: 'Password is required',
+            required: 'Password is required'
           })}
         />
         <input

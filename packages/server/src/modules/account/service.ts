@@ -27,13 +27,6 @@ export class AccountService {
     });
   }
 
-  async createNewAccount(account: {
-    username: string;
-    password: string;
-  }): Promise<Account> {
-    return this.accountRepository.save(account);
-  }
-
   async findAll(): Promise<AccountDTO[]> {
     try {
       const accounts = await this.accountRepository.find();
