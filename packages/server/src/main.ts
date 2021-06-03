@@ -6,10 +6,12 @@ import {
   WinstonModule,
 } from 'nest-winston';
 import * as winston from 'winston';
+import * as cookieParser from 'cookie-parser';
 
 import { AppModule } from './modules';
 import { configService } from './config/config.service';
 import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
+import { RoleModule } from './modules/role';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -51,6 +53,7 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3333;
   const NODE_ENV = process.env.NODE_ENV || 'development';
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.use(cookieParser());
   await app.listen(PORT, () => {
     Logger.log(`Listening on port: ${PORT}`);
     Logger.log(`Current node environment: ${NODE_ENV}`);

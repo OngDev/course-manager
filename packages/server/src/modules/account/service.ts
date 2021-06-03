@@ -27,11 +27,18 @@ export class AccountService {
     });
   }
 
-  async createNewAccount(account: {
-    username: string;
-    password: string;
-  }): Promise<Account> {
-    return this.accountRepository.save(account);
+  async createNewAccount({ username, password }): Promise<Account> {
+    const newAccount = Object.assign(
+      {},
+      {
+        username,
+        password,
+        createdBy: username,
+        updatedBy: username,
+      },
+    );
+
+    return this.accountRepository.save(newAccount);
   }
 
   async findAll(): Promise<AccountDTO[]> {

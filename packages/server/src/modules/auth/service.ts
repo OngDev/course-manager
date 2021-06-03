@@ -2,12 +2,13 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { AccountService } from '../account/service';
 import { JwtService } from '@nestjs/jwt';
 import { isMatch, hashPassword } from './utils';
-import { RegisterPayload } from './types';
+import { RegisterPayload, TokenPayload } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../user/model';
 import Role from '../role/model';
 import { AccountCreationDTO } from '../account/dto/account-creation.dto';
+import { configService } from '../../config/config.service';
 
 @Injectable()
 export class AuthService {
@@ -31,9 +32,19 @@ export class AuthService {
   }
 
   async login(account: any) {
-    const payload = { username: account.username, sub: account?.user?.userId };
+    const {
+      username,
+      user: { userId, email, fullName },
+    } = account;
+    const cookie = this.getCookieWithJwtToken(username, userId);
     return {
-      access_token: this.jwtService.sign(payload),
+      cookie,
+      user: {
+        userId,
+        email,
+        fullName,
+        username,
+      },
     };
   }
 
@@ -66,5 +77,14 @@ export class AuthService {
       this.logger.error(error.message);
       throw new BadRequestException(error);
     }
+  }
+
+  getCookieWithJwtToken(username: string, userId: string) {
+    const payload: TokenPayload = { username, userId };
+    const token = this.jwtService.sign(payload);
+    const {
+      signOptions: { expiresIn },
+    } = configService.getJwtConfig();
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${expiresIn}`;
   }
 }

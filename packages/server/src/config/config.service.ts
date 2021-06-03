@@ -6,7 +6,7 @@ type JWT_CONFIG = {
   secret: string;
   signOptions: {
     expiresIn: string;
-  },
+  };
 };
 
 class ConfigService {
@@ -62,7 +62,9 @@ class ConfigService {
   public getJwtConfig(): JWT_CONFIG {
     return {
       secret: this.getValue('JWT_SECRET'),
-      signOptions: { expiresIn: '60s' }
+      signOptions: {
+        expiresIn: `${this.getValue('JWT_EXPIRATION_TIME')}s` || '60s',
+      },
     };
   }
 }
@@ -73,6 +75,8 @@ const configService = new ConfigService(process.env).ensureValues([
   'POSTGRES_USER',
   'POSTGRES_PASSWORD',
   'POSTGRES_DATABASE',
+  'JWT_SECRET',
+  'JWT_EXPIRATION_TIME',
 ]);
 
 export { configService };
