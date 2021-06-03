@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany } from 'typeorm';
-import { BaseEntity } from '../base/base.entity';
+import BaseEntity from '../base/base.entity';
 import { Video } from '../video/model';
 
 @Entity({ name: 'course' })

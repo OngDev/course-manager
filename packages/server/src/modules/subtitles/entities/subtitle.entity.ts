@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { BaseEntity } from 'src/modules/base/base.entity';
+import BaseEntity from '@modules/base/base.entity';
 import { Video } from '../../video/model';
 import { SubLine } from 'src/modules/sub-lines/entities/sub-line.entity';
 

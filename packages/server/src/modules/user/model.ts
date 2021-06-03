@@ -10,7 +10,7 @@ import {
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import Account from '../account/model';
 import Role from '../role/model';
-import { BaseEntity } from '../base/base.entity';
+import BaseEntity from '../base/base.entity';
 import { IAdmin, IMod, ISupporter, IUser } from './types';
 
 @Entity('Supporters')

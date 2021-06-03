@@ -9,6 +9,11 @@ type JWT_CONFIG = {
   };
 };
 
+type SeedingOptions = {
+  seeds: string[];
+  factories: string[];
+};
+
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
   private getValue(key: string, throwOnMissing = true): string {
@@ -34,7 +39,7 @@ class ConfigService {
     return mode != 'DEV';
   }
 
-  public getTypeOrmConfig(): TypeOrmModuleOptions {
+  public getTypeOrmConfig(): TypeOrmModuleOptions & SeedingOptions {
     return {
       type: 'postgres',
 
@@ -56,6 +61,8 @@ class ConfigService {
       },
 
       ssl: this.isProduction(),
+      seeds: [join(__dirname, '../seeds', '*.{ts,js}')],
+      factories: [join(__dirname, '../factories', '*.{ts,js}')],
     };
   }
 

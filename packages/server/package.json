@@ -24,7 +24,10 @@
     "pretypeorm": "(rm ormconfig.json || :) && ts-node -r tsconfig-paths/register src/scripts/add-orm-config.ts",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "typeorm:migration:generate": "npm run typeorm -- migration:generate -n",
-    "typeorm:migration:run": "npm run typeorm -- migration:run"
+    "typeorm:migration:run": "npm run typeorm -- migration:run",
+    "seed": "ts-node -r tsconfig-paths/register ./node_modules/typeorm-seeding/dist/cli.js",
+    "seed:config": "npm run seed config",
+    "seed:run": "npm run seed seed"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
@@ -41,6 +44,7 @@
     "class-validator": "^0.13.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
+    "moment": "^2.29.1",
     "nest-winston": "^1.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
@@ -51,6 +55,8 @@
     "rxjs": "^6.6.6",
     "swagger-ui-express": "^4.1.6",
     "typeorm": "^0.2.32",
+    "typeorm-seeding": "^1.6.1",
+    "uuid": "^8.3.2",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -67,6 +73,7 @@
     "@types/passport-jwt": "^3.0.5",
     "@types/passport-local": "^1.0.33",
     "@types/supertest": "^2.0.10",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",

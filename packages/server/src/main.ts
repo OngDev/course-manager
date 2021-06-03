@@ -11,7 +11,6 @@ import * as cookieParser from 'cookie-parser';
 import { AppModule } from './modules';
 import { configService } from './config/config.service';
 import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
-import { RoleModule } from './modules/role';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

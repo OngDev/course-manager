@@ -1,6 +1,6 @@
 import { Entity, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { BaseEntity } from 'src/modules/base/base.entity';
+import BaseEntity from '@modules/base/base.entity';
 import { Subtitle } from 'src/modules/subtitles/entities/subtitle.entity';
 
 @Entity('sub_line')

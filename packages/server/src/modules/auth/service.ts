@@ -9,13 +9,14 @@ import { User } from '../user/model';
 import Role from '../role/model';
 import { AccountCreationDTO } from '../account/dto/account-creation.dto';
 import { configService } from '../../config/config.service';
+import Account from '@modules/account/model';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly logger: Logger,
-    private readonly accountService: AccountService,
     private readonly jwtService: JwtService,
+    private readonly accountService: AccountService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Role)
@@ -49,6 +50,7 @@ export class AuthService {
   }
 
   async register({
+    username,
     email,
     fullname,
     password: rawPass,
@@ -59,10 +61,21 @@ export class AuthService {
         username: email,
         password: hashedPassword,
       };
-      const newAccount = await this.accountService.createNewAccount(account);
       const userRole = await this.roleRepository.findOneOrFail({
         name: 'USER',
       });
+      const existedAccount = await this.accountService.findOne(username);
+      if (existedAccount) {
+        throw new Error('Username is existed');
+      }
+      const existedUser = await this.userRepository.findOne({
+        where: { email },
+      });
+      if (existedUser) {
+        throw new Error('Email is existed');
+      }
+
+      const newAccount = await this.accountService.createNewAccount(account);
       const newUser = await this.userRepository.save({
         email,
         account: newAccount,
@@ -74,7 +87,7 @@ export class AuthService {
         userId: newUser.id,
       });
     } catch (error) {
-      this.logger.error(error.message);
+      this.logger.error(`${error.message}`);
       throw new BadRequestException(error);
     }
   }
