@@ -11,6 +11,7 @@ import * as cookieParser from 'cookie-parser';
 import { AppModule } from './modules';
 import { configService } from './config/config.service';
 import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
+import { ResponseAddAccessTokenToHeaderInterceptor } from './common/interceptors/responseWithAllowOriginInterceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -53,6 +54,12 @@ async function bootstrap() {
   const NODE_ENV = process.env.NODE_ENV || 'development';
   app.useGlobalFilters(new AllExceptionsFilter());
   app.use(cookieParser());
+  app.useGlobalInterceptors(new ResponseAddAccessTokenToHeaderInterceptor());
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   await app.listen(PORT, () => {
     Logger.log(`Listening on port: ${PORT}`);
     Logger.log(`Current node environment: ${NODE_ENV}`);

@@ -15,7 +15,7 @@ import { AuthService } from './service';
 import { RegisterPayload } from './types';
 import { ApiTags } from '@nestjs/swagger';
 import RequestWithAccount from './interfaces/requestWithUser';
-import { response, Response } from 'express';
+import { Response } from 'express';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -26,14 +26,14 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Req() req: RequestWithAccount, @Res() res: Response) {
-    const { cookie, user } = await this.authService.login(req.user);
+    const { cookie, user: parsedUser } = await this.authService.login(req.user);
     res.setHeader('Set-Cookie', cookie);
-    return response.send(user);
+    return res.send(parsedUser);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Req() req) {
     return req.user;
   }
 
@@ -45,6 +45,7 @@ export class AuthController {
   ): Promise<any> {
     const { cookie, user } = await this.authService.register(registerPayload);
     res.setHeader('Set-Cookie', cookie);
-    return response.send(user);
+    //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    return res.send(user);
   }
 }

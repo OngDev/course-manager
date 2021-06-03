@@ -27,20 +27,6 @@ export class AccountService {
     });
   }
 
-  async createNewAccount({ username, password }): Promise<Account> {
-    const newAccount = Object.assign(
-      {},
-      {
-        username,
-        password,
-        createdBy: username,
-        updatedBy: username,
-      },
-    );
-
-    return this.accountRepository.save(newAccount);
-  }
-
   async findAll(): Promise<AccountDTO[]> {
     try {
       const accounts = await this.accountRepository.find();

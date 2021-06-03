@@ -10,10 +10,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/model';
 import Role from '../role/model';
 import { AuthController } from './controller';
+import Account from '@modules/account/model';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role]),
+    TypeOrmModule.forFeature([User, Role, Account]),
     AccountModule,
     PassportModule,
     JwtModule.register(configService.getJwtConfig()),
