@@ -74,6 +74,10 @@ class ConfigService {
       },
     };
   }
+
+  public getClientUrl(): string {
+    return this.getValue('CLIENT_URL');
+  }
 }
 
 const configService = new ConfigService(process.env).ensureValues([

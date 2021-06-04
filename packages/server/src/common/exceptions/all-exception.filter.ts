@@ -5,6 +5,7 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { configService } from 'src/config/config.service';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -18,7 +19,24 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    let message: any =
+    if (
+      status === HttpStatus.UNAUTHORIZED &&
+      request.originalUrl === '/auth/profile'
+    ) {
+      response.setHeader(
+        'Access-Control-Allow-Origin',
+        configService.getClientUrl(),
+      );
+
+      response.setHeader(
+        'Set-Cookie',
+        `Authentication=; HttpOnly; Path=/; Max-Age=0;SameSite=None; Secure`,
+      );
+      response.status(HttpStatus.OK).send();
+      return;
+    }
+
+    const message: any =
       exception instanceof HttpException
         ? exception.getResponse()
         : 'Internal server';
@@ -32,6 +50,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
         }
       }
     }
+    response.setHeader(
+      'Access-Control-Allow-Origin',
+      configService.getClientUrl(),
+    );
     response.status(status).json({
       status,
       timestamp: new Date().toUTCString(),

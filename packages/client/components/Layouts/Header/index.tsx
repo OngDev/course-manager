@@ -1,8 +1,15 @@
-import React from 'react'
-import styles from './index.module.css'
-import { PROFILE as ProfileIcon, SEARCH as SearchIcon } from '@constants/icons'
+import React from 'react';
+import { PROFILE as ProfileIcon, SEARCH as SearchIcon } from '@constants/icons';
+import { Profile } from '../../../types';
+import styles from './index.module.css';
+import { ModalTypeEnum } from '..';
 
-export default function Header() {
+type Props = {
+  profile: null | Profile;
+  toggleModal: Function;
+};
+
+export default function Header({ profile, toggleModal }: Props) {
   return (
     <header className={styles.header}>
       <div className={styles.wrapperHeader}>
@@ -11,19 +18,24 @@ export default function Header() {
             <div className={styles.searchIcon}>
               <img src={SearchIcon} alt="search-icon" />
             </div>
-            <input className={styles.searchInput} type="text" placeholder="Search..." />
+            <input
+              className={styles.searchInput}
+              type="text"
+              placeholder="Search..."
+            />
           </div>
         </div>
         <div className={styles.headerRight}>
           <ul className={styles.icons}>
             <li>
-              <a href="#">
+              <a href="#" onClick={() => toggleModal(ModalTypeEnum.Login)}>
                 <img src={ProfileIcon} alt="icon" />
+                {profile}
               </a>
             </li>
           </ul>
         </div>
       </div>
     </header>
-  )
+  );
 }

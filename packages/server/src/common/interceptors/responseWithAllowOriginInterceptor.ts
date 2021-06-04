@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { Response as ExpressResponse } from 'express';
+import { configService } from 'src/config/config.service';
 
 @Injectable()
 export class ResponseAddAccessTokenToHeaderInterceptor
@@ -15,7 +16,7 @@ export class ResponseAddAccessTokenToHeaderInterceptor
     const ResponseObj: ExpressResponse = context.switchToHttp().getResponse();
     ResponseObj.setHeader(
       'Access-Control-Allow-Origin',
-      'http://localhost:3000',
+      configService.getClientUrl(),
     );
     return next.handle();
   }

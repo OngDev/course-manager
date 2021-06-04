@@ -1,8 +1,13 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import { ModalTypeEnum } from '@components/Layouts';
 import styles from './index.module.css';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 
 export interface RegisterFormData {
   username: string;
@@ -12,7 +17,12 @@ export interface RegisterFormData {
   fullname: string;
 }
 
-export default function RegisterModal() {
+type Props = {
+  toggleModal: Function;
+};
+
+export default function RegisterModal({ toggleModal }: Props) {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     formState: { errors },
@@ -25,23 +35,25 @@ export default function RegisterModal() {
 
   const submitForm = async (data: RegisterFormData) => {
     try {
+      setLoading(true);
       console.log(data);
       // TODO: call api to server
       const { retypedPassword, ...body } = data;
-      const response = await axios.post(
-        'http://localhost:3456/auth/register',
-        body
-      );
+      const response = await axios.post('/auth/register', body);
+      console.log(response.data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const toggleLoginPage = () => {};
-
   return (
     <>
-      <div className={styles.blurBg} />
+      <div
+        className={styles.blurBg}
+        onClick={() => toggleModal(ModalTypeEnum.None)}
+      />
       <form id={styles.registerForm} onSubmit={handleSubmit(submitForm)}>
         <div className={styles.formHeader}>Sign Up</div>
         <div className={styles.loginNavigator}>
@@ -49,8 +61,8 @@ export default function RegisterModal() {
           <span
             tabIndex={0}
             role="button"
-            onClick={toggleLoginPage}
-            onKeyDown={toggleLoginPage}
+            onClick={() => toggleModal(ModalTypeEnum.Login)}
+            onKeyDown={() => toggleModal(ModalTypeEnum.Login)}
           >
             Click here
           </span>
@@ -136,14 +148,21 @@ export default function RegisterModal() {
               value === password.current || 'The passwords do not match'
           })}
         />
-        <input
+        <button
+          form={styles.registerForm}
+          disabled={loading}
           className={styles.submitButton}
           onClick={() => {
             setIsFirstVisit(false);
           }}
+          value="Submit"
           type="submit"
-          value="Sign Up"
-        />
+        >
+          {loading && (
+            <FontAwesomeIcon icon={faSpinner} spin={true}/>
+          )}
+          {!loading && <span>Sign Up</span>}
+        </button>
       </form>
     </>
   );

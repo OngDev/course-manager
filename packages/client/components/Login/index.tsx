@@ -1,15 +1,25 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
-import axios from 'axios';
+import { axios } from 'utils/axios';
+import { ModalTypeEnum } from '@components/Layouts';
 import styles from './index.module.css';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 
 export interface LoginFormData {
   username: string;
   password: string;
 }
 
-export default function LoginModal() {
+type Props = {
+  toggleModal: Function;
+};
+
+export default function LoginModal({ toggleModal }: Props) {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     formState: { errors },
@@ -22,23 +32,25 @@ export default function LoginModal() {
 
   const submitForm = async (data: LoginFormData) => {
     try {
+      setLoading(true);
       // TODO: call api to server
-      const response = await axios.post(
-        'http://localhost:3456/auth/login',
-        data,
-        {
-          withCredentials: true
-        }
-      );
+      const response = await axios.post('/auth/login', data, {
+        withCredentials: true
+      });
       console.log(response.data);
     } catch (error) {
       console.log(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className={styles.blurBg} />
+      <div
+        className={styles.blurBg}
+        onClick={() => toggleModal(ModalTypeEnum.None)}
+      />
       <form id={styles.registerForm} onSubmit={handleSubmit(submitForm)}>
         <div className={styles.formHeader}>Login</div>
         <FormItem
@@ -69,14 +81,21 @@ export default function LoginModal() {
             required: 'Password is required'
           })}
         />
-        <input
+        <button
+          form={styles.registerForm}
+          disabled={loading}
           className={styles.submitButton}
           onClick={() => {
             setIsFirstVisit(false);
           }}
+          value="Submit"
           type="submit"
-          value="Login"
-        />
+        >
+          {loading && (
+            <FontAwesomeIcon icon={faSpinner} spin={true}/>
+          )}
+          {!loading && <span>Login</span>}
+        </button>
       </form>
     </>
   );
