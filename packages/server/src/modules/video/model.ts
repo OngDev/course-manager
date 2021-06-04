@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import BaseEntity from '../base/base.entity';
 import { Subtitle } from '@modules/subtitles/model';
+import { UploadState } from 'src/common/enums/upload-state.enum';
 @Entity({ name: 'video' })
 export class Video extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
@@ -21,6 +22,9 @@ export class Video extends BaseEntity {
 
   @Column({ type: 'varchar', length: 300, nullable: true })
   videoUrl: string;
+
+  @Column({ type: 'varchar', default: UploadState.UPLOADING })
+  uploadState: string;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   publishAt: Date;
