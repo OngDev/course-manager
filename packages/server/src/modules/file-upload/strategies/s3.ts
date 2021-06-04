@@ -30,12 +30,12 @@ export class FileUploadByS3 implements FileUpload {
       ACL: 'public-read',
       ContentType: file.mimetype,
     };
-    const data =
+    const uploadPromise =
       file.size <= 6000000
-        ? await s3.upload({ ...params, Body: file.buffer }).promise()
-        : await this.uploadMultiplePart(file, params);
+        ? s3.upload({ ...params, Body: file.buffer }).promise()
+        : this.uploadMultiplePart(file, params);
 
-    return data.Location;
+    return uploadPromise;
   }
 
   /**

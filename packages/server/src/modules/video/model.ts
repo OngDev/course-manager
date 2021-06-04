@@ -19,7 +19,7 @@ export class Video extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
   thumbnailUrl: string;
 
-  @Column({ type: 'varchar', length: 300 })
+  @Column({ type: 'varchar', length: 300, nullable: true })
   videoUrl: string;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
