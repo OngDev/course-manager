@@ -3,11 +3,11 @@
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
-import { axios } from 'utils/axios';
 import { ModalTypeEnum } from '@components/Layouts';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { axios } from '../../utils/axios';
 import styles from './index.module.css';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 
 export interface LoginFormData {
   username: string;
@@ -20,6 +20,7 @@ type Props = {
 
 export default function LoginModal({ toggleModal }: Props) {
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     formState: { errors },
@@ -40,6 +41,7 @@ export default function LoginModal({ toggleModal }: Props) {
       console.log(response.data);
     } catch (error) {
       console.log(error.message);
+      setErrorMessage('Failed to login, please try again!');
     } finally {
       setLoading(false);
     }
@@ -51,8 +53,20 @@ export default function LoginModal({ toggleModal }: Props) {
         className={styles.blurBg}
         onClick={() => toggleModal(ModalTypeEnum.None)}
       />
-      <form id={styles.registerForm} onSubmit={handleSubmit(submitForm)}>
-        <div className={styles.formHeader}>Login</div>
+      <form id={styles.loginForm} onSubmit={handleSubmit(submitForm)}>
+        <div className={styles.formHeader}>Sign In</div>
+        <div className={styles.registerNavigator}>
+          Don't have an account?{' '}
+          <span
+            tabIndex={0}
+            role="button"
+            onClick={() => toggleModal(ModalTypeEnum.Register)}
+            onKeyDown={() => toggleModal(ModalTypeEnum.Register)}
+          >
+            Click here
+          </span>
+        </div>
+        {errorMessage && <span>{errorMessage}</span>}
         <FormItem
           isFirstVisit={isFirstVisit}
           labelName="Username"
@@ -81,8 +95,18 @@ export default function LoginModal({ toggleModal }: Props) {
             required: 'Password is required'
           })}
         />
+        <div className={styles.forgotPassword}>
+          <span
+            tabIndex={0}
+            role="button"
+            onClick={() => toggleModal(ModalTypeEnum.Register)}
+            onKeyDown={() => toggleModal(ModalTypeEnum.Register)}
+          >
+            Forgot password?
+          </span>
+        </div>
         <button
-          form={styles.registerForm}
+          form={styles.loginForm}
           disabled={loading}
           className={styles.submitButton}
           onClick={() => {
@@ -91,9 +115,7 @@ export default function LoginModal({ toggleModal }: Props) {
           value="Submit"
           type="submit"
         >
-          {loading && (
-            <FontAwesomeIcon icon={faSpinner} spin={true}/>
-          )}
+          {loading && <FontAwesomeIcon icon={faSpinner} spin />}
           {!loading && <span>Login</span>}
         </button>
       </form>

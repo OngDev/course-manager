@@ -3,11 +3,11 @@
 import { useForm } from 'react-hook-form';
 import FormItem from '@components/FormItem';
 import { useRef, useState } from 'react';
-import axios from 'axios';
 import { ModalTypeEnum } from '@components/Layouts';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { axios } from '../../utils/axios';
 import styles from './index.module.css';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon, } from '@fortawesome/react-fontawesome'
 
 export interface RegisterFormData {
   username: string;
@@ -158,9 +158,7 @@ export default function RegisterModal({ toggleModal }: Props) {
           value="Submit"
           type="submit"
         >
-          {loading && (
-            <FontAwesomeIcon icon={faSpinner} spin={true}/>
-          )}
+          {loading && <FontAwesomeIcon icon={faSpinner} spin />}
           {!loading && <span>Sign Up</span>}
         </button>
       </form>

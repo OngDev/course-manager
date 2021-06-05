@@ -17,7 +17,7 @@
   margin-bottom: 7px;
 }
 
-.loginNavigator {
+.registerNavigator {
   width: 100%;
   text-align: left;
   margin-bottom: 40px;
@@ -26,12 +26,24 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.loginNavigator span {
+.registerNavigator span {
   color: #ffb347;
   cursor: pointer;
 }
+.forgotPassword {
+  width: 100%;
+  text-align: right;
+  font-size: 1rem;
+  font-weight: 500;
+}
 
-#registerForm {
+.forgotPassword span {
+  color: #ffb347;
+  cursor: pointer;
+  text-align: right;
+}
+
+#loginForm {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -42,7 +54,7 @@
   flex-direction: column;
   background-color: #2c2c2c;
   width: 452px;
-  height: 340px;
+  height: 454px;
   border-radius: 20px;
   box-shadow: 30px 30px 60px rgba(0, 0, 0, 0.25);
   padding: 37px 37px 0 37px;
@@ -51,12 +63,12 @@
 
 
 .submitButton {
-  background: linear-gradient(180deg, #1877f2 0%, #1877f2 100%);
+  background-color: #ffb347;
   border-radius: 10px;
   height: 55px;
   width: 100%;
   filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.15));
-  color: #ffffff;
+  color: #484848;
 
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   font-size: 1rem;

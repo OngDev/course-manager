@@ -30,7 +30,7 @@ export default function Header({ profile, toggleModal }: Props) {
             <li>
               <a href="#" onClick={() => toggleModal(ModalTypeEnum.Login)}>
                 <img src={ProfileIcon} alt="icon" />
-                {profile}
+                {profile && profile.fullName}
               </a>
             </li>
           </ul>
