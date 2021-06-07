@@ -1,4 +1,3 @@
-import { UploadState } from './../../common/enums/upload-state.enum';
 import { catchError } from 'src/common/helpers/catch-error';
 import { FileUpload } from './../file-upload/file-upload.interface';
 import {
@@ -53,7 +52,6 @@ export class VideosService extends TypeOrmCrudService<Video> {
       this.fileUpload
         .uploadVideo(file)
         .then(async (result) => {
-          console.log({ result });
           video.videoUrl = result.Location;
 
           await this.videoRepository.save(video);
@@ -90,18 +88,6 @@ export class VideosService extends TypeOrmCrudService<Video> {
     } catch (error) {
       this.logger.error(error.message);
       throw error;
-    }
-  }
-
-  async updateUploadState(
-    id: string,
-    uploadState: UploadState,
-  ): Promise<VideoCreationDTO> {
-    try {
-      return await this.videoRepository.save({ id, uploadState });
-    } catch (error) {
-      this.logger.error(error);
-      catchError(error);
     }
   }
 
