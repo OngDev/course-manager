@@ -7,15 +7,13 @@
       {
         "type": "node",
         "request": "launch",
-        "name": "Launch Program",
-        "program": "${workspaceFolder}/src/main.ts",
-        "preLaunchTask": "tsc: watch - tsconfig.build.json",
-        "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-        "skipFiles": [
-          "${workspaceFolder}/node_modules/**/*.js",
-          "<node_internals>/**/*.js"
-        ]
-      }      
+        "name": "Debug Nest Framework",
+        "args": ["${workspaceFolder}/src/main.ts"],
+        "runtimeArgs": ["--nolazy", "-r", "ts-node/register", "-r", "tsconfig-paths/register"],
+        "sourceMaps": true,
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector"
+    }
     ],
     "resolveSourceMapLocations": [
       "${workspaceFolder}/**",

@@ -5,66 +5,23 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VideoCreationDTO } from './dto/create-video.dto';
-import { VideoUpdationDTO } from './dto/update-video.dto';
 import { Video } from './model';
 import { Cache } from 'cache-manager';
 import * as fs from 'fs';
 
 @Injectable()
-export class VideoService {
+export class VideosService extends TypeOrmCrudService<Video> {
   constructor(
     private readonly logger: Logger,
     @InjectRepository(Video)
     private readonly videoRepository: Repository<Video>,
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache,
-  ) {}
-
-  create(createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
-    try {
-      return this.videoRepository.save(createVideoDto);
-    } catch (error) {
-      this.logger.error(error);
-    }
-  }
-
-  findAll(): Promise<VideoCreationDTO[]> {
-    try {
-      return this.videoRepository.find();
-    } catch (error) {
-      this.logger.error(error);
-    }
-  }
-
-  findOne(id: string): Promise<VideoCreationDTO> {
-    try {
-      return this.videoRepository.findOne({ id });
-    } catch (error) {
-      this.logger.error(error);
-    }
-  }
-
-  async update(
-    id: string,
-    updateVideoDto: VideoUpdationDTO,
-  ): Promise<VideoCreationDTO> {
-    try {
-      return await this.videoRepository.save({ id, ...updateVideoDto });
-    } catch (error) {
-      this.logger.error(error);
-    }
-  }
-
-  async remove(id: string): Promise<boolean> {
-    try {
-      await this.videoRepository.delete({ id });
-      return true;
-    } catch (error) {
-      this.logger.error(error);
-    }
+  ) {
+    super(videoRepository);
   }
 
   async getVideoPathById(id: string): Promise<string> {

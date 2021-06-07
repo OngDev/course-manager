@@ -31,10 +31,24 @@ export class AuthController {
     return res.send(parsedUser);
   }
 
+  @HttpCode(200)
+  @Get('logout')
+  logout(@Res() res: Response) {
+    const emptyCookie = this.authService.getEmptyCookie();
+    res.setHeader('Set-Cookie', emptyCookie);
+    return res.end();
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req) {
     return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('isLoggedIn')
+  isLoggedIn(@Res() res: Response) {
+    return res.send(true);
   }
 
   @HttpCode(200)

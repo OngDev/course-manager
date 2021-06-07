@@ -8,13 +8,13 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { VideoService } from '../video/service';
+import { VideosService } from '../video/service';
 import { generateStreamResponseConfig } from './utils';
 
 @Controller('stream')
 export class StreamController {
   constructor(
-    private readonly videoService: VideoService,
+    private readonly videosService: VideosService,
     private readonly logger: Logger,
   ) {}
   @Get(':id')
@@ -30,8 +30,8 @@ export class StreamController {
         throw new BadRequestException('Requires Range header');
       }
 
-      const videoPath = await this.videoService.getVideoPathById(id);
-      const videoSize = this.videoService.getVideoSizeByPath(videoPath);
+      const videoPath = await this.videosService.getVideoPathById(id);
+      const videoSize = this.videosService.getVideoSizeByPath(videoPath);
       this.logger.verbose(`Video size: ${videoSize}`);
 
       const { headers, start, end } = generateStreamResponseConfig(
@@ -43,7 +43,7 @@ export class StreamController {
       res.writeHead(206, headers);
 
       // create video read stream for this particular chunk
-      const videoStream = this.videoService.getVideoStream(
+      const videoStream = this.videosService.getVideoStream(
         videoPath,
         start,
         end,

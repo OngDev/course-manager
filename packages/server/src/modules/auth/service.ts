@@ -25,6 +25,7 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     try {
+      this.logger.log(username, pass);
       const account = await this.accountRepository.findOne({
         where: {
           username,
@@ -147,5 +148,9 @@ export class AuthService {
       signOptions: { expiresIn },
     } = configService.getJwtConfig();
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${expiresIn};SameSite=None; Secure`;
+  }
+
+  getEmptyCookie() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0;SameSite=None; Secure`;
   }
 }
