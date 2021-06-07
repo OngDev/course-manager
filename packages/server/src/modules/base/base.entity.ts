@@ -4,10 +4,12 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
 } from 'typeorm';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 // FIXME: Update this base on our ERD
 export default abstract class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
+  @ApiPropertyOptional()
   id: string;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })

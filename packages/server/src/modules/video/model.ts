@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import BaseEntity from '../base/base.entity';
-import { Subtitle } from 'src/modules/subtitles/entities/subtitle.entity';
+import { Subtitle } from '@modules/subtitles/model';
 @Entity({ name: 'video' })
 export class Video extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })

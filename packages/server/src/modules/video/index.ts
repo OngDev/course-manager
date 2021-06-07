@@ -1,5 +1,5 @@
 import { Module, Logger, CacheModule, CACHE_MANAGER } from '@nestjs/common';
-import { VideoService } from './service';
+import { VideosService } from './service';
 import { VideoController } from './controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Video } from './model';
@@ -8,9 +8,10 @@ import { Video } from './model';
   imports: [TypeOrmModule.forFeature([Video])],
   controllers: [VideoController],
   providers: [
-    VideoService,
+    VideosService,
     Logger,
     { provide: CACHE_MANAGER, useClass: CacheModule },
   ],
+  exports: [VideosService],
 })
 export class VideoModule {}

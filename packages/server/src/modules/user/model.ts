@@ -12,6 +12,7 @@ import Account from '../account/model';
 import Role from '../role/model';
 import BaseEntity from '../base/base.entity';
 import { IAdmin, IMod, ISupporter, IUser } from './types';
+import { ApiResponseProperty } from '@nestjs/swagger';
 
 @Entity('Supporters')
 class Supporter implements ISupporter {
@@ -44,17 +45,21 @@ class User extends BaseEntity implements IUser {
   @Column({ type: 'varchar', unique: true })
   @IsNotEmpty({ message: 'Email is required' })
   @IsEmail({}, { message: 'Email is not valid' })
+  @ApiResponseProperty()
   email: string;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
+  @ApiResponseProperty()
   fullName: string;
 
   @OneToOne(() => Account, (account) => account.user)
   @JoinColumn()
+  @ApiResponseProperty({ type: Account })
   account: Account;
 
   @ManyToMany(() => Role, (role) => role.users)
   @JoinTable()
+  @ApiResponseProperty({ type: [Role] })
   roles: Role[];
 
   @OneToOne('Admin', 'user')

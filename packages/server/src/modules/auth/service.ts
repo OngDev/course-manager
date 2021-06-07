@@ -148,4 +148,8 @@ export class AuthService {
     } = configService.getJwtConfig();
     return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${expiresIn};SameSite=None; Secure`;
   }
+
+  getEmptyCookie() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0;SameSite=None; Secure`;
+  }
 }

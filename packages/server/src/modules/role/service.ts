@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import Role from './model';
 
 @Injectable()
-export default class RoleService {
+export class RolesService extends TypeOrmCrudService<Role> {
   constructor(
     @InjectRepository(Role)
-    private readonly roleRepository: Repository<Role>,
-  ) {}
-
-  async create(name: string, createdBy: string) {
-    await this.roleRepository.save({ name, createdBy, updatedBy: createdBy });
+    roleRepository: Repository<Role>,
+  ) {
+    super(roleRepository);
   }
 }

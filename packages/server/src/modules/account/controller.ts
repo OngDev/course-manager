@@ -10,7 +10,9 @@ import {
 import { AccountDTO } from './dto/account';
 import { AccountUpdationDTO } from './dto/account-updation.dto';
 import { AccountService } from './service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Accounts')
 @Controller('accounts')
 export class AccountController {
   constructor(

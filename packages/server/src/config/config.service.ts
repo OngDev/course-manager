@@ -78,6 +78,9 @@ class ConfigService {
   public getClientUrl(): string {
     return this.getValue('CLIENT_URL');
   }
+  public getAdminPassword(): string {
+    return this.getValue('ADMIN_PASSWORD');
+  }
 }
 
 const configService = new ConfigService(process.env).ensureValues([
