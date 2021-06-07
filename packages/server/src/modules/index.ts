@@ -8,9 +8,12 @@ import { CourseModule } from './course';
 import { VideoModule } from './video';
 import { SubtitlesModule } from './subtitles';
 import { CommentsModule } from './comments';
+import { UserModule } from './user';
 import { SubLinesModule } from './sub-lines';
 import { CommentReactionsModule } from './comment-reactions';
 import { AuthModule } from './auth';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt';
 
 @Module({
   imports: [
@@ -20,10 +23,17 @@ import { AuthModule } from './auth';
     VideoModule,
     SubtitlesModule,
     CommentsModule,
+    UserModule,
     SubLinesModule,
     CommentReactionsModule,
     AuthModule,
     ConfigModule.forRoot(),
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}

@@ -10,4 +10,4 @@ import { UsersService } from './service';
   exports: [UsersService],
   controllers: [UsersController],
 })
-export class VideoModule {}
+export class UserModule {}

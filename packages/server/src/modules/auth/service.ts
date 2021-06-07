@@ -25,7 +25,6 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     try {
-      this.logger.log(username, pass);
       const account = await this.accountRepository.findOne({
         where: {
           username,

@@ -2,6 +2,7 @@ import { Comment } from '@modules/comments/model';
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 import BaseEntity from '@modules/base/base.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('comment_reaction')
 export class CommentReaction extends BaseEntity {
@@ -13,5 +14,6 @@ export class CommentReaction extends BaseEntity {
   @Column({ nullable: false })
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   type: string;
 }

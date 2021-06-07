@@ -11,7 +11,7 @@ export default class CreateAdmin implements Seeder {
     await connection.transaction(async (manager) => {
       const roleRepository = manager.getRepository(Role);
       const userRole = await roleRepository.findOneOrFail({
-        name: 'USER',
+        name: 'ADMIN',
       });
       const newAccount = new Account();
       newAccount.username = 'admin';

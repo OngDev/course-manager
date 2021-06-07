@@ -9,6 +9,20 @@ import { ApiTags } from '@nestjs/swagger';
   model: {
     type: User,
   },
+  query: {
+    join: {
+      account: {
+        eager: true,
+        allow: ['username'],
+        exclude: ['id'],
+      },
+      roles: {
+        eager: true,
+        allow: ['name'],
+        exclude: ['id'],
+      },
+    },
+  },
 })
 @Controller('users')
 export class UsersController implements CrudController<User> {

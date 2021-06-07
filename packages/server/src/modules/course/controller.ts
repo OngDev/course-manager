@@ -1,13 +1,28 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { Course } from './model';
 import { CoursesService } from './service';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '@modules/auth/guards/jwt';
+import { Roles } from '@modules/auth/decorator';
+import { Role } from '@modules/auth/types';
 
 @ApiTags('Courses')
 @Crud({
   model: {
     type: Course,
+  },
+  routes: {
+    only: [
+      'createOneBase',
+      'deleteOneBase',
+      'getOneBase',
+      'updateOneBase',
+      'getManyBase',
+    ],
+    createOneBase: {
+      decorators: [Roles(Role.Admin)],
+    },
   },
 })
 @Controller('courses')
