@@ -1,4 +1,11 @@
-import { Controller, Post, UseInterceptors, Body, UploadedFile, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseInterceptors,
+  Body,
+  UploadedFile,
+  BadRequestException,
+} from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { Video } from './model';
 import { VideosService } from './service';

@@ -1472,6 +1472,19 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
+"@nestjsx/crud-request@^4.1.0":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@nestjsx/crud-request/-/crud-request-4.6.2.tgz#c0d29df354b3de648a44dc0973f80131c953af86"
+  integrity sha512-EqveTzR5JLMRBnxqJzo0mm7Ff05IzQ6dvfg1gj46q6nOwZ0hfXr0FBTChtciKtkZB/QOlWQ5B1scCap/QuNJWQ==
+  dependencies:
+    "@nestjsx/util" "^4.6.2"
+    qs "^6.8.0"
+
+"@nestjsx/util@^4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@nestjsx/util/-/util-4.6.2.tgz#89bd31447a30f9666d7ad1616111c78b2d61dd56"
+  integrity sha512-YG2gQvSm7p8zBFaW6MFM5r1Ihk4Vr189SB2OTr7fV7qcjPS+02v7xILw2dTz2emdmu0t0AgCL2RU1V0lY8Aa9w==
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"
@@ -7312,6 +7325,11 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
+lodash.omitby@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.omitby/-/lodash.omitby-4.6.0.tgz#5c15ff4754ad555016b53c041311e8f079204791"
+  integrity sha1-XBX/R1StVVAWtTwEExHo8HkgR5E=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -9286,6 +9304,13 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
+qs@^6.8.0:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
+  integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
+  dependencies:
+    side-channel "^1.0.4"
+
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -9354,6 +9379,21 @@ ra-data-json-server@^3.15.2:
   dependencies:
     query-string "^5.1.1"
     ra-core "^3.15.2"
+
+ra-data-nestjsx-crud@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/ra-data-nestjsx-crud/-/ra-data-nestjsx-crud-1.1.5.tgz#28a040943b6ee0c995a2c62f6d28e7c60fc1b224"
+  integrity sha512-FzakbRPAGH9aRV/4OTHTLEYBHrTo/zcb5049LuvYJ4OUMUYYa+ucdhDq28DYlz5E9EPoSOq7OR9NTZUXIm7OWw==
+  dependencies:
+    "@nestjsx/crud-request" "^4.1.0"
+    lodash.omitby "^4.6.0"
+
+ra-data-simple-rest@^3.16.0:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-3.16.0.tgz#0fb25065e492cbca4eb0c3a04b793432916532ec"
+  integrity sha512-v3+QAU0EhicQHHLpQGTRQHBRODPaefI3s4y1eFfthaQHdtdNxbf2SnMU00tbHP2kGgzJWoWc38/cc6oqOqETlw==
+  dependencies:
+    query-string "^5.1.1"
 
 ra-i18n-polyglot@^3.15.2:
   version "3.15.2"
