@@ -8,21 +8,27 @@ import {
 } from 'typeorm';
 import BaseEntity from '../base/base.entity';
 import { Subtitle } from '@modules/subtitles/model';
+import { ApiProperty } from '@nestjs/swagger';
 @Entity({ name: 'video' })
 export class Video extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
+  @ApiProperty()
   title: string;
 
   @Column({ type: 'varchar', length: 300 })
+  @ApiProperty()
   description: string;
 
   @Column({ type: 'varchar', length: 300 })
+  @ApiProperty()
   thumbnailUrl: string;
 
   @Column({ type: 'varchar', length: 300, nullable: true })
+  @ApiProperty()
   videoUrl: string;
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+  @ApiProperty()
   publishAt: Date;
 
   @ManyToOne(() => Course, (course) => course.videos)

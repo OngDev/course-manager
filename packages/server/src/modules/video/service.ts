@@ -19,8 +19,6 @@ import { CoursesService } from '../course/service';
 import { VideoCreationDTO } from './dto/create-video.dto';
 @Injectable()
 export class VideosService extends TypeOrmCrudService<Video> {
-  private fileUpload: FileUpload;
-
   constructor(
     private readonly logger: Logger,
     @InjectRepository(Video)
@@ -30,37 +28,18 @@ export class VideosService extends TypeOrmCrudService<Video> {
     private readonly coursesService: CoursesService,
   ) {
     super(videoRepository);
-    this.fileUpload = new FileUploadByS3();
   }
 
-  async create(
-    createVideoDto: VideoCreationDTO,
-    file: Express.Multer.File,
-  ): Promise<VideoCreationDTO> {
+  async create(createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
     try {
       const course = await this.coursesService.findOne(createVideoDto.courseId);
 
       if (!course) throw new BadRequestException('Course is not exist');
 
-      const video = await this.videoRepository.save({
+      return await this.videoRepository.save({
         ...createVideoDto,
         course,
-        createdBy: '',
-        updatedBy: '',
       });
-
-      this.fileUpload
-        .uploadVideo(file)
-        .then(async (result) => {
-          video.videoUrl = result.Location;
-
-          await this.videoRepository.save(video);
-        })
-        .catch(() => {
-          throw new BadRequestException('Upload video fail');
-        });
-
-      return video;
     } catch (error) {
       this.logger.error(error);
       catchError(error);
