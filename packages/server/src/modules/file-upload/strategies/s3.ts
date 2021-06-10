@@ -1,5 +1,6 @@
 import { FileUpload } from './../file-upload.interface';
 import * as AWS from 'aws-sdk';
+import { FileUploadType } from 'src/common/enums/file-upload-type.enum';
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.ACCESS_KEY_ID,
@@ -20,10 +21,10 @@ export class FileUploadByS3 implements FileUpload {
    * upload single file to AWS S3
    * @param file
    */
-  async uploadVideo(file: Express.Multer.File) {
+  async uploadFile(file: Express.Multer.File, type: FileUploadType) {
     const fileType = file.originalname.split('.').pop();
     const fileName = new Date().getTime();
-    const urlKey = `${process.env.AWS_S3_FOLDER}/${fileName}.${fileType}`;
+    const urlKey = `${process.env.AWS_S3_FOLDER}/${type}/${fileName}.${fileType}`;
     const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
       Key: urlKey,
@@ -32,10 +33,10 @@ export class FileUploadByS3 implements FileUpload {
     };
     const uploadPromise =
       file.size <= 6000000
-        ? s3.upload({ ...params, Body: file.buffer }).promise()
-        : this.uploadMultiplePart(file, params);
+        ? await s3.upload({ ...params, Body: file.buffer }).promise()
+        : await this.uploadMultiplePart(file, params);
 
-    return uploadPromise;
+    return uploadPromise.Location;
   }
 
   /**

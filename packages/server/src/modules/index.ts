@@ -14,6 +14,7 @@ import { CommentReactionsModule } from './comment-reactions';
 import { AuthModule } from './auth';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt';
+import { FileUploadModule } from './file-upload';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { JwtAuthGuard } from './auth/guards/jwt';
     SubLinesModule,
     CommentReactionsModule,
     AuthModule,
+    FileUploadModule,
     ConfigModule.forRoot(),
   ],
   providers: [

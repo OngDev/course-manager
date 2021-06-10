@@ -27,8 +27,10 @@ export class VideoCreationDTO {
   @IsNotEmpty()
   readonly courseId?: string;
 
+  @ApiProperty({ default: 'this is videoUrl' })
   @IsString()
   @Type(() => String)
+  @IsNotEmpty()
   readonly videoUrl?: string;
 
   readonly course?: Course;
