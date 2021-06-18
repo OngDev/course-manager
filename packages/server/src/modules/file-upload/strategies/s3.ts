@@ -9,6 +9,23 @@ const s3 = new AWS.S3({
 });
 
 export class FileUploadByS3 implements FileUpload {
+  async getAllFile(marker: string = '') {
+    const params = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      MaxKeys: 10,
+      Marker: marker,
+    };
+
+    const data = await s3.listObjects(params).promise();
+
+    return {
+      data: data.Contents.map(({ Key, Size }) => ({
+        url: `https://s3.${process.env.S3_REGION}.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}/${Key}`,
+        size: Size,
+        marker: Key,
+      })),
+    };
+  }
   downloadVideo(url: string) {
     throw new Error('Method not implemented.');
   }
