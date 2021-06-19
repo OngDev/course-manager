@@ -1,6 +1,7 @@
 import { FileUpload } from './../file-upload.interface';
 import * as AWS from 'aws-sdk';
 import { FileUploadType } from 'src/common/enums/file-upload-type.enum';
+import { InternalServerErrorException } from '@nestjs/common';
 
 const s3 = new AWS.S3({
   accessKeyId: process.env.ACCESS_KEY_ID,
@@ -39,21 +40,26 @@ export class FileUploadByS3 implements FileUpload {
    * @param file
    */
   async uploadFile(file: Express.Multer.File, type: FileUploadType) {
-    const fileType = file.originalname.split('.').pop();
-    const fileName = new Date().getTime();
-    const urlKey = `${process.env.AWS_S3_FOLDER}/${type}/${fileName}.${fileType}`;
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME,
-      Key: urlKey,
-      ACL: 'public-read',
-      ContentType: file.mimetype,
-    };
-    const uploadPromise =
-      file.size <= 6000000
-        ? await s3.upload({ ...params, Body: file.buffer }).promise()
-        : await this.uploadMultiplePart(file, params);
+    try {
+      const fileType = file.originalname.split('.').pop();
+      const fileName = new Date().getTime();
+      const urlKey = `${process.env.AWS_S3_FOLDER}/${type}/${fileName}.${fileType}`;
+      const params = {
+        Bucket: process.env.AWS_S3_BUCKET_NAME,
+        Key: urlKey,
+        ACL: 'public-read',
+        ContentType: file.mimetype,
+      };
+      const uploadPromise =
+        file.size <= 6000000
+          ? await s3.upload({ ...params, Body: file.buffer }).promise()
+          : await this.uploadMultiplePart(file, params);
 
-    return uploadPromise.Location;
+      return uploadPromise.Location;
+    } catch (error) {
+      console.log(error.message);
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
   /**

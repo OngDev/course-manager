@@ -51,7 +51,6 @@ export class AuthController {
 
   @Get('profile')
   getProfile(@Req() req, @Res() res: Response) {
-    console.log(req.user);
     return res.send(req.user);
   }
 
