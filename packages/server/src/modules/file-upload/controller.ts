@@ -5,6 +5,8 @@ import {
   Body,
   UploadedFile,
   BadRequestException,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -32,5 +34,10 @@ export class FileUploadController {
     const data = await this.fileUpload.uploadFile(file, fileUploadDTO.type);
 
     return { data };
+  }
+
+  @Get()
+  async getAll(@Query('marker') marker: string) {
+    return await this.fileUpload.getAllFile(marker);
   }
 }
