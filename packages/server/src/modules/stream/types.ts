@@ -1,4 +1,4 @@
-import { OutgoingHttpHeaders, OutgoingHttpHeader } from 'node:http';
+import { OutgoingHttpHeaders, OutgoingHttpHeader } from 'http';
 
 export interface VideoStreamResponseConfig {
   headers: OutgoingHttpHeaders | OutgoingHttpHeader[];

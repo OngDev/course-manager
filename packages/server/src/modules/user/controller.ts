@@ -48,7 +48,6 @@ export class UsersController implements CrudController<User> {
         roles: roles.map((role) => role['name']).join(','),
       };
     });
-    this.logger.log(baseRes['data']);
     return baseRes;
   }
 }

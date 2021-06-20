@@ -1,36 +1,44 @@
 import * as React from "react";
-import { List, Datagrid, Edit, Create, SimpleForm, DateField, TextField, EditButton, TextInput, DateInput, ImageInput, ImageField } from 'react-admin';
+import { useNotify, useRefresh, useRedirect, List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, TextInput, ImageInput, ImageField } from 'react-admin';
 
 export const CourseList = (props) => (
     <List {...props}>
         <Datagrid>
-            <TextField source="id" />
             <TextField source="title" />
-            <DateField source="published_at" />
-            <TextField source="average_note" />
-            <TextField source="views" />
-            <EditButton basePath="/posts" />
+            <TextField source="description"/>
+            <ImageField source="thumbnailUrl" label="Thumbnail" />
+            <EditButton basePath="/courses" />
         </Datagrid>
     </List>
 );
 
-const PostTitle = ({ record }) => {
-    return <span>Post {record ? `"${record.title}"` : ''}</span>;
+const CourseTitle = ({ record }) => {
+    return <span>Course {record ? `"${record.title}"` : ''}</span>;
 };
 
-export const CourseEdit = (props) => (
-    <Edit title={<PostTitle />} {...props}>
-        <SimpleForm>
-            <TextInput disabled source="id" />
-            <TextInput source="title" />
-            <TextInput source="teaser" options={{ multiline: true }} />
-            <TextInput multiline source="body" />
-            <DateInput label="Publication date" source="published_at" />
-            <TextInput source="average_note" />
-            <TextInput disabled label="Nb views" source="views" />
-        </SimpleForm>
-    </Edit>
-);
+export const CourseEdit = (props) => {
+    const notify = useNotify();
+    const refresh = useRefresh();
+    const redirect = useRedirect();
+
+    const onSuccess = () => {
+        notify(`Changes saved`)
+        redirect('/courses');
+        refresh();
+    };
+    return (
+        <Edit title={<CourseTitle />} onSuccess={onSuccess} {...props} mutationMode="optimistic">
+            <SimpleForm >
+                <TextInput source="title" />
+                <TextInput source="description" options={{ multiline: true }} />
+                <ImageField source="thumbnailUrl" label="Current Thumbnail" />
+                <ImageInput source="thumbnail" label="New Thumbnail" accept="image/*">
+                    <ImageField source="src" title="title"/>
+                </ImageInput>
+            </SimpleForm>
+        </Edit>
+    );
+};
 
 export const CourseCreate = (props) => (
     <Create title="Create a Course" {...props}>

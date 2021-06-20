@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -15,6 +15,7 @@ import { AuthModule } from './auth';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt';
 import { FileUploadModule } from './file-upload';
+import { LoggerMiddleware } from 'src/common/middlewares/loggerMiddleware';
 
 @Module({
   imports: [
@@ -30,12 +31,18 @@ import { FileUploadModule } from './file-upload';
     AuthModule,
     FileUploadModule,
     ConfigModule.forRoot(),
+    Logger,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    Logger,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
