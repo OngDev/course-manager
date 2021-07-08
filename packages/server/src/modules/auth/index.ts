@@ -7,19 +7,18 @@ import { JwtModule } from '@nestjs/jwt';
 import { configService } from '../../config/config.service';
 import { JwtStrategy } from './strategies/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../user/model';
 import Role from '../role/model';
 import { AuthController } from './controller';
 import Account from '@modules/account/model';
 import { RolesGuard } from './guards/role';
 import { APP_GUARD } from '@nestjs/core';
-import { UsersService } from '@modules/user/service';
+import { UserModule } from '@modules/user';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role, Account]),
+    TypeOrmModule.forFeature([Role, Account]),
     AccountModule,
-    UsersService,
+    UserModule,
     PassportModule,
     JwtModule.register(configService.getJwtConfig()),
   ],

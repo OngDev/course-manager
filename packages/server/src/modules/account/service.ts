@@ -12,7 +12,7 @@ import { mapAccountToAccountDTO } from './mapper';
 import Account from './model';
 
 @Injectable()
-export class AccountService {
+export class AccountsService {
   constructor(
     private readonly logger: Logger,
     @InjectRepository(Account)

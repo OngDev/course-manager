@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AccountDTO } from './dto/account';
 import { AccountUpdationDTO } from './dto/account-updation.dto';
-import { AccountService } from './service';
+import { AccountsService } from './service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Accounts')
@@ -17,7 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class AccountController {
   constructor(
     private readonly logger: Logger,
-    private readonly accountService: AccountService,
+    private readonly accountService: AccountsService,
   ) {}
 
   // Find All Accounts

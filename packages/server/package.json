@@ -30,6 +30,7 @@
     "seed:run": "npm run seed seed"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.6.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",
@@ -48,9 +49,11 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "generate-password": "^1.6.0",
+    "handlebars": "^4.7.7",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "nest-winston": "^1.5.0",
+    "nodemailer": "^6.6.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

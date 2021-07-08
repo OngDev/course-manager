@@ -6,16 +6,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import Role from '../role/model';
 import { configService } from '../../config/config.service';
-//import { UsersService } from '@modules/user/service';
-import { AccountService } from '@modules/account/service';
+import { UsersService } from '@modules/user/service';
+import { AccountsService } from '@modules/account/service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly logger: Logger,
     private readonly jwtService: JwtService,
-    private readonly accountService: AccountService,
-    // private readonly usersService: UsersService,
+    private readonly accountsService: AccountsService,
+    private readonly usersService: UsersService,
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
     private connection: Connection,
@@ -23,7 +23,7 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     try {
-      const account = await this.accountService.findOne(username);
+      const account = await this.accountsService.findOne(username);
       if (account && (await isMatch(pass, account.password))) {
         const { id, email, fullName } = account.user;
         return {
@@ -44,19 +44,19 @@ export class AuthService {
 
   async validateJwtUser({ userId, username }): Promise<any> {
     try {
-      // const user = await this.usersService.findOne({
-      //   id: userId,
-      // });
-      // if (!user) {
-      //   return null;
-      // }
-      // const { id, email, fullName } = user;
-      // return {
-      //   username,
-      //   id,
-      //   email,
-      //   fullName,
-      // };
+      const user = await this.usersService.findOne({
+        id: userId,
+      });
+      if (!user) {
+        return null;
+      }
+      const { id, email, fullName } = user;
+      return {
+        username,
+        id,
+        email,
+        fullName,
+      };
     } catch (error) {
       return null;
     }
@@ -90,25 +90,25 @@ export class AuthService {
       const userRole = await this.roleRepository.findOneOrFail({
         name: 'USER',
       });
-      await this.accountService.checkUsernameExisted(username);
-      //await this.usersService.checkEmailExisted(email);
+      await this.accountsService.checkUsernameExisted(username);
+      await this.usersService.checkEmailExisted(email);
       await this.connection.transaction(async (manager) => {
-        // const createdUser = await this.usersService.createUserTransaction(
-        //   manager,
-        //   username,
-        //   hashedPassword,
-        //   email,
-        //   [userRole],
-        //   fullName,
-        // );
-        // return this.login({
-        //   username,
-        //   user: {
-        //     userId: createdUser.id,
-        //     email,
-        //     fullName,
-        //   },
-        // });
+        const createdUser = await this.usersService.createUserTransaction(
+          manager,
+          username,
+          hashedPassword,
+          email,
+          [userRole],
+          fullName,
+        );
+        return this.login({
+          username,
+          user: {
+            userId: createdUser.id,
+            email,
+            fullName,
+          },
+        });
       });
     } catch (error) {
       this.logger.error(`${error.message}`);
