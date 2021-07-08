@@ -24,6 +24,7 @@ export class AccountService {
       where: {
         username,
       },
+      relations: ['user'],
     });
   }
 
@@ -76,6 +77,17 @@ export class AccountService {
     } catch (error) {
       this.logger.error(error.message);
       throw new InternalServerErrorException(error);
+    }
+  }
+
+  async checkUsernameExisted(username: string): Promise<void> {
+    const existedAccount = await this.accountRepository.findOne({
+      where: {
+        username,
+      },
+    });
+    if (existedAccount) {
+      throw new Error('Username is existed');
     }
   }
 }

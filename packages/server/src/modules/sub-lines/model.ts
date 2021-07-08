@@ -9,8 +9,8 @@ export class SubLine extends BaseEntity {
   @ManyToOne(() => Subtitle, (subtitle) => subtitle.subLines, { cascade: true })
   subtitle: Subtitle;
 
-  //   @ManyToOne(() => User, (supporter) => supporter, { cascade: true })
-  //   supporter: User;
+  //   @ManyToOne(() => List, (supporter) => supporter, { cascade: true })
+  //   supporter: List;
 
   @CreateDateColumn({ type: 'timestamptz', nullable: false })
   @ApiProperty()

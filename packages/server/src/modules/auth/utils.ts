@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import PasswordGenerator from 'generate-password';
 
 export async function hashPassword(rawPass: string): Promise<string> {
   const salt = await bcrypt.genSalt();
@@ -11,4 +12,12 @@ export async function isMatch(
   hash: string,
 ): Promise<boolean> {
   return await bcrypt.compare(password, hash);
+}
+
+export function generateNewPassword(): string {
+  return PasswordGenerator.generate({
+    length: 10,
+    numbers: true,
+    symbols: true,
+  });
 }

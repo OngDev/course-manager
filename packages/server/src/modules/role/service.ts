@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import Role from './model';
 
@@ -8,8 +8,16 @@ import Role from './model';
 export class RolesService extends TypeOrmCrudService<Role> {
   constructor(
     @InjectRepository(Role)
-    roleRepository: Repository<Role>,
+    repo: Repository<Role>,
   ) {
-    super(roleRepository);
+    super(repo);
+  }
+
+  async getRolesByRolesStrArr(roles: string[]): Promise<Role[]> {
+    return await this.repo.find({
+      where: {
+        name: In(roles),
+      },
+    });
   }
 }

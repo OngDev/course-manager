@@ -1,16 +1,17 @@
-import './App.css';
+// routes
+import Router from './routes';
+// theme
+import ThemeConfig from './theme';
+// components
+import ScrollToTop from './components/ScrollToTop';
 
-import * as React from "react";
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import authProvider from './authProvider';
-import { CourseList, CourseCreate, CourseEdit } from './Courses'
-import dataProvider from './dataProvider'
+// ----------------------------------------------------------------------
 
-const App = () => (
-    <Admin dataProvider={dataProvider} authProvider={authProvider}>
-        <Resource name="users" list={ListGuesser} />
-        <Resource name="courses" list={CourseList} edit={CourseEdit} create={CourseCreate}/>
-    </Admin>
-);
-
-export default App;
+export default function App() {
+  return (
+    <ThemeConfig>
+      <ScrollToTop />
+      <Router />
+    </ThemeConfig>
+  );
+}

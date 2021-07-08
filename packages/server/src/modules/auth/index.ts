@@ -13,11 +13,13 @@ import { AuthController } from './controller';
 import Account from '@modules/account/model';
 import { RolesGuard } from './guards/role';
 import { APP_GUARD } from '@nestjs/core';
+import { UsersService } from '@modules/user/service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Role, Account]),
     AccountModule,
+    UsersService,
     PassportModule,
     JwtModule.register(configService.getJwtConfig()),
   ],
