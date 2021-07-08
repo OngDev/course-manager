@@ -9,6 +9,7 @@ import Account from '@modules/account/model';
 import { AccountsService } from '@modules/account/service';
 import { generateNewPassword, hashPassword } from '@modules/auth/utils';
 import { RolesService } from '@modules/role/service';
+import { MailService } from '@modules/mail/service';
 
 @Injectable()
 export class UsersService extends TypeOrmCrudService<User> {
@@ -17,6 +18,7 @@ export class UsersService extends TypeOrmCrudService<User> {
     private readonly accountsService: AccountsService,
     private readonly rolesService: RolesService,
     private readonly connection: Connection,
+    private readonly mailService: MailService,
     private readonly logger: Logger,
   ) {
     super(repo);
@@ -32,8 +34,7 @@ export class UsersService extends TypeOrmCrudService<User> {
     const hashedPassword = await hashPassword(newPassword);
     const rolesObject = await this.rolesService.getRolesByRolesStrArr(roles);
     await this.connection.transaction(async (manager) => {
-      // TODO: Send email to user with credentials
-      return await this.createUserTransaction(
+      const newUser = await this.createUserTransaction(
         manager,
         username,
         hashedPassword,
@@ -41,6 +42,14 @@ export class UsersService extends TypeOrmCrudService<User> {
         rolesObject,
         fullName,
       );
+      await this.mailService.sendUserConfirmation(
+        username,
+        newPassword,
+        email,
+        fullName,
+        roles.join(', '),
+      );
+      return newUser;
     });
     return null;
   }
