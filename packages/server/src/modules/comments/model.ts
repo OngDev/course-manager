@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import BaseEntity from '@modules/base/base.entity';
 import { CommentReaction } from '@modules/comment-reactions/model';
 import { ApiProperty } from '@nestjs/swagger';
-@Entity('comment')
+@Entity('Comments')
 export class Comment extends BaseEntity {
   @OneToMany(
     () => CommentReaction,

@@ -167,19 +167,19 @@ export default function List() {
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
-    <Page title="List | Minimal-UI">
+    <Page title="Users">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            List
+            Users
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/user/create"
             startIcon={<Icon icon={plusFill} />}
           >
-            New List
+            New User
           </Button>
         </Stack>
 

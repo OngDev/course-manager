@@ -52,7 +52,11 @@ class User extends BaseEntity implements IUser {
   @ApiResponseProperty()
   fullName: string;
 
-  @OneToOne(() => Account, (account) => account.user)
+  @OneToOne(() => Account, (account) => account.user, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn()
   @ApiResponseProperty({ type: Account })
   account: Account;
@@ -62,15 +66,27 @@ class User extends BaseEntity implements IUser {
   @ApiResponseProperty({ type: [Role] })
   roles: Role[];
 
-  @OneToOne('Admin', 'user')
+  @OneToOne('Admin', 'user', {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn()
   admin?: IAdmin;
 
-  @OneToOne('Supporter', 'user')
+  @OneToOne('Supporter', 'user', {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn()
   supporter?: ISupporter;
 
-  @OneToOne('Mod', 'user')
+  @OneToOne('Mod', 'user', {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn()
   mod?: IMod;
 }

@@ -6,10 +6,10 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
-import Products from './pages/Products';
+import Courses from './pages/Courses';
 import Blog from './pages/Blog';
 import UserList from './pages/User/List';
-import UserEdit from './pages/User/Edit';
+import UserCreate from './pages/User/Create';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -27,10 +27,10 @@ export default function Router() {
           element: <UserList />
         },
         {
-          path: 'user/:id',
-          element: <UserEdit />
+          path: 'user/create',
+          element: <UserCreate />
         },
-        { path: 'products', element: <Products /> },
+        { path: 'courses', element: <Courses /> },
         { path: 'blog', element: <Blog /> }
       ]
     },

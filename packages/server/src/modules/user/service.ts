@@ -27,31 +27,36 @@ export class UsersService extends TypeOrmCrudService<User> {
   async createUserByAdmin(
     userCreationPayload: UserCreationPayload,
   ): Promise<any> {
-    const { email, fullName, username, roles } = userCreationPayload;
-    await this.accountsService.checkUsernameExisted(username);
-    await this.checkEmailExisted(email);
-    const newPassword = generateNewPassword();
-    const hashedPassword = await hashPassword(newPassword);
-    const rolesObject = await this.rolesService.getRolesByRolesStrArr(roles);
-    await this.connection.transaction(async (manager) => {
-      const newUser = await this.createUserTransaction(
-        manager,
-        username,
-        hashedPassword,
-        email,
-        rolesObject,
-        fullName,
-      );
-      await this.mailService.sendUserConfirmation(
-        username,
-        newPassword,
-        email,
-        fullName,
-        roles.join(', '),
-      );
-      return newUser;
-    });
-    return null;
+    try {
+      const { email, fullName, username, roles } = userCreationPayload;
+      await this.accountsService.checkUsernameExisted(username);
+      await this.checkEmailExisted(email);
+      const newPassword = generateNewPassword();
+      const hashedPassword = await hashPassword(newPassword);
+      const rolesObject = await this.rolesService.getRolesByRolesStrArr(roles);
+      await this.connection.transaction(async (manager) => {
+        const newUser = await this.createUserTransaction(
+          manager,
+          username,
+          hashedPassword,
+          email,
+          rolesObject,
+          fullName,
+        );
+        await this.mailService.sendUserConfirmation(
+          username,
+          newPassword,
+          email,
+          fullName,
+          roles.join(', '),
+        );
+        return newUser;
+      });
+      return null;
+    } catch (e) {
+      this.logger.error(e.message);
+      return null;
+    }
   }
 
   async checkEmailExisted(email: string): Promise<void> {

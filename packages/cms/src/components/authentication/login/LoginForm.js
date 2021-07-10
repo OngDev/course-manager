@@ -10,6 +10,7 @@ import { Link, Stack, TextField, IconButton, InputAdornment } from '@material-ui
 import { LoadingButton } from '@material-ui/lab';
 // API
 import * as apis from '../../../apis';
+import { setUpdateLoginState } from '../../../apis/axios';
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +23,10 @@ export default function LoginForm() {
     password: Yup.string().required('Password is required')
   });
 
+  setUpdateLoginState((newProfile) => {
+    console.log(`${newProfile.username} logged in`);
+  });
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -29,8 +34,8 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      await apis.auth.login(values);
-      navigate('/dashboard', { replace: true });
+      const user = await apis.auth.login(values);
+      if (user) navigate('/dashboard', { replace: true });
     }
   });
 

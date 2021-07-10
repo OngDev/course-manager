@@ -10,6 +10,9 @@ export default class Account extends BaseEntity {
   @Column({ type: 'varchar', length: 300 })
   password: string;
 
+  @Column({ type: 'boolean', default: true })
+  isActivated: boolean;
+
   @OneToOne(() => User, (user) => user.account)
   user: User;
 }

@@ -38,7 +38,7 @@ export class UsersController implements CrudController<User> {
     @Body() userCreationPayload: UserCreationPayload,
     @Res() res: Response,
   ): Promise<any> {
-    const { user } = await this.service.createUserByAdmin(userCreationPayload);
+    const user = await this.service.createUserByAdmin(userCreationPayload);
     return res.send(user);
   }
 }

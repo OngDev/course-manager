@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { alpha } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@material-ui/core';
@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import MenuPopover from '../../components/MenuPopover';
 //
 import account from '../../_mocks_/account';
+import * as apis from '../../apis';
 
 // ----------------------------------------------------------------------
 
@@ -40,8 +41,14 @@ AccountPopover.propTypes = {
 };
 
 export default function AccountPopover({ profile }) {
+  const navigate = useNavigate();
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await apis.auth.logout();
+    navigate('/login', { replace: true });
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -115,7 +122,7 @@ export default function AccountPopover({ profile }) {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" onClick={handleLogout} variant="outlined">
             Logout
           </Button>
         </Box>
