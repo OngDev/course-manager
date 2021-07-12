@@ -33,7 +33,7 @@ export class VideoController implements CrudController<Video> {
   @Post()
   async create(
     @Body() createVideoDto: VideoCreationDTO,
-  ): Promise<VideoCreationDTO> {
+  ): Promise<VideoDTO> {
     try {
       return await this.service.create(createVideoDto);
     } catch (error) {

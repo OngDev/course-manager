@@ -32,7 +32,7 @@ export class VideosService extends TypeOrmCrudService<Video> {
     super(videoRepository);
   }
 
-  async create(createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
+  async create(createVideoDto: VideoCreationDTO): Promise<VideoDTO> {
     try {
       if (!createVideoDto.courseId)
         throw new BadRequestException('Invalid courseId');
@@ -41,10 +41,12 @@ export class VideosService extends TypeOrmCrudService<Video> {
 
       if (!course) throw new BadRequestException('Course is not exist');
 
-      return await this.videoRepository.save({
+      const video = await this.videoRepository.save({
         ...createVideoDto,
         course,
       });
+
+      return mapVideoToVideoDTO(video);
     } catch (error) {
       this.logger.error(error);
       catchError(error);
@@ -53,8 +55,7 @@ export class VideosService extends TypeOrmCrudService<Video> {
 
   async findByCourseId(courseId: string): Promise<VideoDTO[]> {
     try {
-      if (!courseId)
-        throw new BadRequestException('Invalid courseId');
+      if (!courseId) throw new BadRequestException('Invalid courseId');
 
       const course = await this.coursesService.findOne(courseId);
 
