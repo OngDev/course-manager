@@ -1,4 +1,4 @@
-import { Video } from 'src/modules/video/model';
+import Video from 'src/modules/video/model';
 import { Module, Logger } from '@nestjs/common';
 import { SubtitlesService } from './service';
 import { SubtitlesController } from './controller';

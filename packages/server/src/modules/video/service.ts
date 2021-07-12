@@ -7,15 +7,18 @@ import {
   Logger,
   NotFoundException,
   BadRequestException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Video } from './model';
+import Video from './model';
 import { Cache } from 'cache-manager';
 import * as fs from 'fs';
 import { CoursesService } from '../course/service';
 import { VideoCreationDTO } from './dto/create-video.dto';
+import { VideoDTO } from './dto/video';
+import { mapVideoToVideoDTO } from './mapper';
 @Injectable()
 export class VideosService extends TypeOrmCrudService<Video> {
   constructor(
@@ -31,6 +34,9 @@ export class VideosService extends TypeOrmCrudService<Video> {
 
   async create(createVideoDto: VideoCreationDTO): Promise<VideoCreationDTO> {
     try {
+      if (!createVideoDto.courseId)
+        throw new BadRequestException('Invalid courseId');
+
       const course = await this.coursesService.findOne(createVideoDto.courseId);
 
       if (!course) throw new BadRequestException('Course is not exist');
@@ -42,6 +48,24 @@ export class VideosService extends TypeOrmCrudService<Video> {
     } catch (error) {
       this.logger.error(error);
       catchError(error);
+    }
+  }
+
+  async findByCourseId(courseId: string): Promise<VideoDTO[]> {
+    try {
+      if (!courseId)
+        throw new BadRequestException('Invalid courseId');
+
+      const course = await this.coursesService.findOne(courseId);
+
+      if (!course) throw new BadRequestException('Course is not exist');
+
+      const videos = await this.videoRepository.find({ course });
+
+      return videos.map(mapVideoToVideoDTO);
+    } catch (error) {
+      this.logger.error(error.message);
+      throw new InternalServerErrorException(error);
     }
   }
 
