@@ -5,7 +5,7 @@ import { User } from '../user/model';
 
 @Entity('Roles')
 export default class Role extends BaseEntity {
-  @Column({ type: 'varchar', length: 200 })
+  @Column({ type: 'varchar', length: 200, unique: true })
   @ApiProperty()
   name: string;
 

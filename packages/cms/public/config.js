@@ -1,3 +1,3 @@
 window.appConfig = {
-    SERVER_URL: 'http://localhost:3456'
-}
+  SERVER_URL: 'http://localhost:3456'
+};

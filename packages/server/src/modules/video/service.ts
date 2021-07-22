@@ -14,7 +14,6 @@ import { Repository } from 'typeorm';
 import { Video } from './model';
 import { Cache } from 'cache-manager';
 import * as fs from 'fs';
-import { FileUploadByS3 } from '../file-upload/strategies/s3';
 import { CoursesService } from '../course/service';
 import { VideoCreationDTO } from './dto/create-video.dto';
 @Injectable()

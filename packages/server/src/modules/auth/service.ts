@@ -4,20 +4,18 @@ import { isMatch, hashPassword } from './utils';
 import { RegisterPayload, TokenPayload } from './types';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { User } from '../user/model';
 import Role from '../role/model';
 import { configService } from '../../config/config.service';
-import Account from '@modules/account/model';
+import { UsersService } from '@modules/user/service';
+import { AccountsService } from '@modules/account/service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly logger: Logger,
     private readonly jwtService: JwtService,
-    @InjectRepository(Account)
-    private readonly accountRepository: Repository<Account>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly accountsService: AccountsService,
+    private readonly usersService: UsersService,
     @InjectRepository(Role)
     private readonly roleRepository: Repository<Role>,
     private connection: Connection,
@@ -25,13 +23,9 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     try {
-      const account = await this.accountRepository.findOne({
-        where: {
-          username,
-        },
-        relations: ['user'],
-      });
-      if (account && isMatch(pass, account.password)) {
+      const account = await this.accountsService.findOne(username);
+      this.logger.log(account);
+      if (account && (await isMatch(pass, account.password))) {
         const { id, email, fullName } = account.user;
         return {
           username: account.username,
@@ -51,7 +45,7 @@ export class AuthService {
 
   async validateJwtUser({ userId, username }): Promise<any> {
     try {
-      const user = await this.userRepository.findOne({
+      const user = await this.usersService.findOne({
         id: userId,
       });
       if (!user) {
@@ -89,7 +83,7 @@ export class AuthService {
   async register({
     username,
     email,
-    fullname,
+    fullName,
     password: rawPass,
   }: RegisterPayload): Promise<any> {
     try {
@@ -97,40 +91,23 @@ export class AuthService {
       const userRole = await this.roleRepository.findOneOrFail({
         name: 'USER',
       });
-      const existedAccount = await this.accountRepository.findOne({
-        where: {
-          username,
-        },
-      });
-      if (existedAccount) {
-        throw new Error('Username is existed');
-      }
-      const existedUser = await this.userRepository.findOne({
-        where: { email },
-      });
-      if (existedUser) {
-        throw new Error('Email is existed');
-      }
+      await this.accountsService.checkUsernameExisted(username);
+      await this.usersService.checkEmailExisted(email);
       await this.connection.transaction(async (manager) => {
-        const newAccount = new Account();
-        newAccount.username = username;
-        newAccount.password = hashedPassword;
-        this.logger.verbose(newAccount);
-        await manager.save(newAccount);
-        const newUser = new User();
-        newUser.email = email;
-        newUser.account = newAccount;
-        newUser.roles = [userRole];
-        newUser.fullName = fullname;
-        this.logger.verbose(newUser);
-        const createdUser = await manager.save(newUser);
-        this.logger.verbose(createdUser.id);
+        const createdUser = await this.usersService.createUserTransaction(
+          manager,
+          username,
+          hashedPassword,
+          email,
+          [userRole],
+          fullName,
+        );
         return this.login({
           username,
           user: {
             userId: createdUser.id,
             email,
-            fullname,
+            fullName,
           },
         });
       });

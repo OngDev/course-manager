@@ -5,7 +5,7 @@ import { Video } from '@modules/video/model';
 import { SubLine } from '@modules/sub-lines/model';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity('subtitle')
+@Entity('Subtitles')
 export class Subtitle extends BaseEntity {
   @ManyToOne(() => Video, (video) => video.subtitles, { cascade: true })
   video: Video;

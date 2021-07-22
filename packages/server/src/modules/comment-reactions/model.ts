@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 import BaseEntity from '@modules/base/base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity('comment_reaction')
+@Entity('Comment_reactions')
 export class CommentReaction extends BaseEntity {
   @ManyToOne(() => Comment, (comment) => comment.commentReactions, {
     cascade: true,

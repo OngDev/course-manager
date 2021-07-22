@@ -1,6 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { join } from 'path';
 import 'dotenv/config';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MailerOptions } from '@nestjs-modules/mailer/dist/interfaces/mailer-options.interface';
 
 type JWT_CONFIG = {
   secret: string;
@@ -63,6 +65,31 @@ class ConfigService {
       ssl: this.isProduction(),
       seeds: [join(__dirname, '../seeds', '*.{ts,js}')],
       factories: [join(__dirname, '../factories', '*.{ts,js}')],
+    };
+  }
+
+  public getMailConfig(): MailerOptions {
+    return {
+      // transport: 'smtps://user@example.com:topsecret@smtp.example.com',
+      // or
+      transport: {
+        host: this.getValue('MAIL_HOST'),
+        secure: false,
+        auth: {
+          user: this.getValue('MAIL_USER'),
+          pass: this.getValue('MAIL_PASSWORD'),
+        },
+      },
+      defaults: {
+        from: `"No Reply" <${this.getValue('MAIL_FROM')}>`,
+      },
+      template: {
+        dir: join(__dirname, '../modules/mail/templates'),
+        adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+        options: {
+          strict: true,
+        },
+      },
     };
   }
 
