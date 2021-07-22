@@ -6,7 +6,8 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
-import Courses from './pages/Courses';
+import CourseList from './pages/Course/List';
+import CourseCreate from './pages/Course/Create';
 import Blog from './pages/Blog';
 import UserList from './pages/User/List';
 import UserCreate from './pages/User/Create';
@@ -30,7 +31,8 @@ export default function Router() {
           path: 'user/create',
           element: <UserCreate />
         },
-        { path: 'courses', element: <Courses /> },
+        { path: 'courses', element: <CourseList /> },
+        { path: 'courses/create', element: <CourseCreate /> },
         { path: 'blog', element: <Blog /> }
       ]
     },

@@ -12,28 +12,17 @@ import {
   Typography,
   TextField,
   FormControlLabel,
-  FormGroup,
-  Checkbox
+  FormGroup
 } from '@material-ui/core';
 // components
 import { Form, FormikProvider, useFormik } from 'formik';
-import { withStyles } from '@material-ui/styles';
 import { LoadingButton } from '@material-ui/lab';
 import Page from '../../components/Page';
 //
 import * as apis from '../../apis';
+import { ODCheckbox } from '../../components/ODCheckbox';
 
 // ----------------------------------------------------------------------
-
-const ODCheckbox = withStyles({
-  root: {
-    color: '#ffb347',
-    '&$checked': {
-      color: '#ffb347'
-    }
-  },
-  checked: {}
-})((props) => <Checkbox color="default" {...props} />);
 
 export default function Create() {
   const navigate = useNavigate();

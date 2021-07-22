@@ -14,8 +14,7 @@ import ColorPreview from '../../ColorPreview';
 const ProductImgStyle = styled('img')({
   top: 0,
   width: '100%',
-  height: '100%',
-  objectFit: 'cover',
+  objectFit: 'contain',
   position: 'absolute'
 });
 
@@ -26,53 +25,35 @@ CourseCard.propTypes = {
 };
 
 export default function CourseCard({ course }) {
-  const { name, cover, price, colors, status, priceSale } = course;
+  const { id, title, description, thumbnailUrl, videoCount } = course;
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase'
-            }}
-          >
-            {status}
-          </Label>
-        )}
-        <ProductImgStyle alt={name} src={cover} />
+        {/* {status && ( */}
+        {/*  <Label */}
+        {/*    variant="filled" */}
+        {/*    color={(status === 'sale' && 'error') || 'info'} */}
+        {/*    sx={{ */}
+        {/*      zIndex: 9, */}
+        {/*      top: 16, */}
+        {/*      right: 16, */}
+        {/*      position: 'absolute', */}
+        {/*      textTransform: 'uppercase' */}
+        {/*    }} */}
+        {/*  > */}
+        {/*    {status} */}
+        {/*  </Label> */}
+        {/* )} */}
+        <ProductImgStyle alt={title} src={thumbnailUrl} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link to="#" color="inherit" underline="hover" component={RouterLink}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {title}
           </Typography>
         </Link>
-
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
-          <Typography variant="subtitle1">
-            <Typography
-              component="span"
-              variant="body1"
-              sx={{
-                color: 'text.disabled',
-                textDecoration: 'line-through'
-              }}
-            >
-              {priceSale && fCurrency(priceSale)}
-            </Typography>
-            &nbsp;
-            {fCurrency(price)}
-          </Typography>
-        </Stack>
       </Stack>
     </Card>
   );
