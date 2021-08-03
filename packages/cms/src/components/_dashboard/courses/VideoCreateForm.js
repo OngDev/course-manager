@@ -1,26 +1,42 @@
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 // material
-import { Card, Stack, Container, Typography, TextField } from '@material-ui/core';
+import { Card, Stack, Typography, TextField, Modal } from '@material-ui/core';
 // components
 import { Form, FormikProvider, useFormik } from 'formik';
 import { LoadingButton } from '@material-ui/lab';
-import Page from '../../components/Page';
-import { FileUploader } from '../../components/FileUploader';
-import { COURSE_THUMBNAIL_TYPE } from '../../constants/fileTypes';
+import { makeStyles } from '@material-ui/styles';
+import { FileUploader } from '../../FileUploader';
+import { VIDEO_THUMBNAIL_TYPE, VIDEO_TYPE } from '../../../constants/fileTypes';
 // apis
-import * as apis from '../../apis';
+import * as apis from '../../../apis';
+
+const useStyles = makeStyles({
+  card: {
+    maxWidth: 345,
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    padding: '12px'
+  }
+});
 
 // ----------------------------------------------------------------------
+VideoCreateForm.propsType = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  courseId: PropTypes.string
+};
 
-export default function Create() {
-  const [thumbnailUrl, setThumbnailUrl] = useState('');
-  const navigate = useNavigate();
+export default function VideoCreateForm({ open, onClose, courseId }) {
+  const classes = useStyles();
+  const [videoThumbnailUrl, setVideoThumbnailUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
 
-  const CourseSchema = Yup.object().shape({
-    title: Yup.string().required('Full name is required'),
-    description: Yup.string().required('Username is required')
+  const VideoSchema = Yup.object().shape({
+    title: Yup.string().required('Title is required'),
+    description: Yup.string().required('Description is required')
   });
 
   const formik = useFormik({
@@ -28,28 +44,30 @@ export default function Create() {
       title: '',
       description: ''
     },
-    validationSchema: CourseSchema,
+    validationSchema: VideoSchema,
     onSubmit: async (values) => {
       const data = {
         ...values,
-        thumbnailUrl
+        thumbnailUrl: videoThumbnailUrl,
+        videoUrl,
+        courseId
       };
-      const newCourse = await apis.course.create(data);
-      if (!newCourse) {
+      const newVideo = await apis.video.create(data);
+      if (!newVideo) {
         return;
       }
-      navigate('/dashboard/courses', { replace: true });
+      onClose();
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
-    <Page title="List | Minimal-UI">
-      <Container>
+    <Modal open={open} onClose={onClose}>
+      <Card className={classes.card}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            New Course
+            New Video
           </Typography>
         </Stack>
         <FormikProvider value={formik}>
@@ -74,11 +92,18 @@ export default function Create() {
                 helperText={touched.description && errors.description}
               />
               <FileUploader
-                initUrl={thumbnailUrl}
-                type={COURSE_THUMBNAIL_TYPE}
-                setUrl={setThumbnailUrl}
+                initUrl={videoThumbnailUrl}
+                type={VIDEO_THUMBNAIL_TYPE}
+                setUrl={setVideoThumbnailUrl}
                 title="Upload thumbnail"
-                name="create-course-thumb"
+                name="create-video-thumb"
+              />
+              <FileUploader
+                initUrl={videoUrl}
+                type={VIDEO_TYPE}
+                setUrl={setVideoUrl}
+                title="Upload video"
+                name="create-video"
               />
               <LoadingButton
                 fullWidth
@@ -92,8 +117,7 @@ export default function Create() {
             </Stack>
           </Form>
         </FormikProvider>
-        <Card />
-      </Container>
-    </Page>
+      </Card>
+    </Modal>
   );
 }

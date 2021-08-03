@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import DashboardApp from './pages/DashboardApp';
 import CourseList from './pages/Course/List';
 import CourseCreate from './pages/Course/Create';
+import CourseEdit from './pages/Course/Edit';
 import Blog from './pages/Blog';
 import UserList from './pages/User/List';
 import UserCreate from './pages/User/Create';
@@ -33,6 +34,7 @@ export default function Router() {
         },
         { path: 'courses', element: <CourseList /> },
         { path: 'courses/create', element: <CourseCreate /> },
+        { path: 'courses/:id', element: <CourseEdit /> },
         { path: 'blog', element: <Blog /> }
       ]
     },
