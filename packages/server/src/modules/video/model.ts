@@ -31,6 +31,10 @@ export class Video extends BaseEntity {
   @ApiProperty()
   publishAt: Date;
 
+  @Column({ type: 'smallint' })
+  @ApiProperty()
+  order: number;
+
   @ManyToOne(() => Course, (course) => course.videos)
   course: Course;
 

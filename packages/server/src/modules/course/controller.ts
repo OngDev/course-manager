@@ -26,6 +26,13 @@ import { ApiTags } from '@nestjs/swagger';
       field: 'id',
     },
   },
+  query: {
+    join: {
+      videos: {
+        allow: undefined,
+      },
+    },
+  },
 })
 @Controller('courses')
 export class CoursesController implements CrudController<Course> {
