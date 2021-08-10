@@ -26,6 +26,13 @@ import { ApiTags } from '@nestjs/swagger';
       field: 'id',
     },
   },
+  query: {
+    join: {
+      videos: {
+        allow: undefined,
+      },
+    },
+  },
 })
 @Controller('courses')
 export class CoursesController implements CrudController<Course> {
@@ -33,25 +40,5 @@ export class CoursesController implements CrudController<Course> {
 
   get base(): CrudController<Course> {
     return this;
-  }
-
-  @Override()
-  async getMany(
-    @ParsedRequest() req: CrudRequest,
-  ): Promise<GetManyDefaultResponse<Course> | Course[]> {
-    req.options.query.join = {
-      videos: {
-        eager: true,
-      },
-    };
-    const baseRes = await this.base.getManyBase(req);
-    baseRes['data'] = baseRes['data'].map((item) => {
-      const { videos, ...rest } = item;
-      return {
-        ...rest,
-        videoCount: videos.length,
-      };
-    });
-    return baseRes;
   }
 }
