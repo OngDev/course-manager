@@ -56,15 +56,15 @@ export default function Edit() {
     enableReinitialize: true,
     validationSchema: CourseSchema,
     onSubmit: async (values) => {
-      // const data = {
-      //   ...values,
-      //   thumbnailUrl
-      // };
-      // const newCourse = await apis.course.create(data);
-      // if (!newCourse) {
-      //   return;
-      // }
-      // navigate('/dashboard/courses', { replace: true });
+      const data = {
+        ...values,
+        thumbnailUrl
+      };
+      const updatedCourse = await apis.course.update(id, data);
+      if (!updatedCourse) {
+        return;
+      }
+      navigate('/dashboard/courses', { replace: true });
     }
   });
 
@@ -72,10 +72,19 @@ export default function Edit() {
   const closeVideoForm = (e, reason) => {
     if (reason !== 'backdropClick') setVideoModelOpen(false);
   };
+
+  const videoCreatedHandler = (newVideo) => {
+    setVideos([...videos, newVideo]);
+  };
+
   return (
     <Page title="List | Minimal-UI">
       <Container>
-        <VideoCreateForm open={isVideoModelOpen} onClose={closeVideoForm} />
+        <VideoCreateForm
+          open={isVideoModelOpen}
+          onClose={closeVideoForm}
+          onDataCreated={videoCreatedHandler}
+        />
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Edit Course
