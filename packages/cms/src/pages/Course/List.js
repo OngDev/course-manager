@@ -23,17 +23,21 @@ export default function Courses() {
     setIsLoading(true);
     const queryString = RequestQueryBuilder.create({
       page,
-      limit: 20
+      limit: 20,
+      join: {
+        field: 'videos',
+        select: ['id']
+      }
     });
     const response = await apis.course.find(queryString.query());
     const { data: fetchedCourses, count, page: fetchedPage, pageCount } = response;
     if (count > 0) {
       setCourses(
-        fetchedCourses.map(({ id, title, description, videoCount, thumbnailUrl }) => ({
+        fetchedCourses.map(({ id, title, description, thumbnailUrl, videos }) => ({
           id,
           title,
           description,
-          videoCount,
+          videoCount: videos.length,
           thumbnailUrl
         }))
       );

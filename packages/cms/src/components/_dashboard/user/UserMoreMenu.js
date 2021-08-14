@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import editFill from '@iconify/icons-eva/edit-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -9,7 +10,11 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@materia
 
 // ----------------------------------------------------------------------
 
-export default function UserMoreMenu({ id }) {
+UserMoreMenu.propTypes = {
+  id: PropTypes.string
+};
+
+function UserMoreMenu({ id }) {
   const navigate = useNavigate();
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,3 +52,4 @@ export default function UserMoreMenu({ id }) {
     </>
   );
 }
+export default UserMoreMenu;

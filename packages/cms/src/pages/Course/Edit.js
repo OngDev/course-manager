@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // material
 import { Card, Stack, Container, Typography, TextField, Grid, Button } from '@material-ui/core';
 // components
@@ -68,7 +68,7 @@ export default function Edit() {
     }
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
   const closeVideoForm = (e, reason) => {
     if (reason !== 'backdropClick') setVideoModelOpen(false);
   };
