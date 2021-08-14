@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@material-ui/core/styles';
 //
@@ -36,7 +36,6 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState(null);
 

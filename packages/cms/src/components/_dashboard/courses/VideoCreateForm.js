@@ -23,14 +23,14 @@ const useStyles = makeStyles({
 });
 
 // ----------------------------------------------------------------------
-VideoCreateForm.propsType = {
+VideoCreateForm.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   courseId: PropTypes.string,
   onDataCreated: PropTypes.func
 };
 
-export default function VideoCreateForm({ open, onClose, courseId, onDataCreated }) {
+function VideoCreateForm({ open, onClose, courseId, onDataCreated }) {
   const classes = useStyles();
   const [videoThumbnailUrl, setVideoThumbnailUrl] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
@@ -123,3 +123,5 @@ export default function VideoCreateForm({ open, onClose, courseId, onDataCreated
     </Modal>
   );
 }
+
+export default VideoCreateForm;
