@@ -1,5 +1,5 @@
 import { User } from '@modules/user/model';
-import { Controller, Post, Body, Req, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Req, Logger, Get, Param } from '@nestjs/common';
 import {
   Crud,
   CrudController,
@@ -13,6 +13,7 @@ import { VideosService } from './service';
 import { ApiTags } from '@nestjs/swagger';
 import { VideoCreationDTO } from './dto/create-video.dto';
 import { Course } from '@modules/course/model';
+import { VideoDTO } from './dto/video';
 
 @ApiTags('Videos')
 @Crud({
@@ -28,10 +29,25 @@ export class VideoController implements CrudController<Video> {
     return this;
   }
 
+  // Create video of course
   @Post()
   async create(
     @Body() createVideoDto: VideoCreationDTO,
-  ): Promise<VideoCreationDTO> {
-    return await this.service.create(createVideoDto);
+  ): Promise<VideoDTO> {
+    try {
+      return await this.service.create(createVideoDto);
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  // Find video by Id
+  @Get('course/:courseId')
+  async findByCourseId(@Param('courseId') courseId: string): Promise<VideoDTO[]> {
+    try {
+      return await this.service.findByCourseId(courseId);
+    } catch (error) {
+      this.logger.error(error);
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsNotEmpty, IsString } from 'class-validator';
 import BaseEntity from '@modules/base/base.entity';
-import { Video } from '@modules/video/model';
+import Video from '@modules/video/model';
 import { SubLine } from '@modules/sub-lines/model';
 import { ApiProperty } from '@nestjs/swagger';
 
